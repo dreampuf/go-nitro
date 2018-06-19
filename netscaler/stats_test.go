@@ -39,17 +39,10 @@ func TestNitroClient_FindAllStats(t *testing.T) {
 		return
 	}
 	_, err = client.FindAllStats(Lbvserver.Type())
-=======
-import "testing"
-
-func TestNitroClient_FindStat(t *testing.T) {
-	_, err := client.FindAllStats("lbvserver")
->>>>>>> e8e459d (Add statistics functions)
 	if err != nil {
 		t.Error("Did not find statistics of type ", err, Lbvserver.Type())
 	}
 }
-<<<<<<< HEAD
 
 func TestNitroClient_FindStats(t *testing.T) {
 	lbName1 := "test_lb_" + randomString(5)
