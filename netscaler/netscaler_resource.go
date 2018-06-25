@@ -21,8 +21,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
-	"net/http"
+		"net/http"
 	"strings"
 )
 
@@ -45,7 +44,6 @@ func createResponseHandler(resp *http.Response) ([]byte, error) {
 		"404 Not Found", "405 Method Not Allowed", "406 Not Acceptable",
 		"503 Service Unavailable", "599 Netscaler specific error":
 		body, _ := ioutil.ReadAll(resp.Body)
-		log.Println("[INFO] go-nitro: error = " + string(body))
 		return body, errors.New("failed: " + resp.Status + " (" + string(body) + ")")
 	default:
 		body, err := ioutil.ReadAll(resp.Body)
@@ -64,7 +62,6 @@ func deleteResponseHandler(resp *http.Response) ([]byte, error) {
 		"405 Method Not Allowed", "406 Not Acceptable",
 		"409 Conflict", "503 Service Unavailable", "599 Netscaler specific error":
 		body, _ := ioutil.ReadAll(resp.Body)
-		log.Println("[INFO] go-nitro: delete: error = " + string(body))
 		return body, errors.New("[INFO] delete failed: " + resp.Status + " (" + string(body) + ")")
 	default:
 		body, err := ioutil.ReadAll(resp.Body)
@@ -80,17 +77,14 @@ func readResponseHandler(resp *http.Response) ([]byte, error) {
 		return body, nil
 	case "404 Not Found":
 		body, _ := ioutil.ReadAll(resp.Body)
-		log.Println("[DEBUG] go-nitro: read: 404 not found")
 		return body, errors.New("go-nitro: read: 404 not found: ")
 	case "400 Bad Request", "401 Unauthorized", "403 Forbidden",
 		"405 Method Not Allowed", "406 Not Acceptable",
 		"409 Conflict", "503 Service Unavailable", "599 Netscaler specific error":
 		body, _ := ioutil.ReadAll(resp.Body)
-		log.Println("[INFO] go-nitro: read: error = " + string(body))
 		return body, errors.New("[INFO] go-nitro: failed read: " + resp.Status + " (" + string(body) + ")")
 	default:
 		body, err := ioutil.ReadAll(resp.Body)
-		log.Println("[INFO] go-nitro: read error = " + string(body))
 		return body, err
 
 	}
@@ -123,90 +117,74 @@ func (c *NitroClient) doHTTPRequest(method string, url string, bytes *bytes.Buff
 	if err != nil {
 		return []byte{}, err
 	}
-	log.Println("[DEBUG] go-nitro: response Status:", resp.Status)
 	return respHandler(resp)
 }
 
 func (c *NitroClient) createResource(resourceType string, resourceJSON []byte) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: Creating resource of type ", resourceType)
 
 	url := c.url + "config/" + resourceType
 
 	if !strings.HasSuffix(resourceType, "_binding") {
 		url = url + "?idempotent=yes"
 	}
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	return c.doHTTPRequest("POST", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
 }
 
 func (c *NitroClient) applyResource(resourceType string, resourceJSON []byte) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: Applying resource of type ", resourceType)
 
 	url := c.url + "config/" + resourceType + "?action=apply"
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	return c.doHTTPRequest("POST", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
 }
 
 func (c *NitroClient) actOnResource(resourceType string, resourceJSON []byte, action string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: changing resource of type ", resourceType)
 
 	url := c.url + fmt.Sprintf("config/%s?action=%s", resourceType, action)
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	return c.doHTTPRequest("POST", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
 }
 
 func (c *NitroClient) changeResource(resourceType string, resourceName string, resourceJSON []byte) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: changing resource of type ", resourceType)
 
 	url := c.url + "config/" + resourceType + "/" + resourceName + "?action=update"
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	return c.doHTTPRequest("POST", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
 }
 
 func (c *NitroClient) updateResource(resourceType string, resourceName string, resourceJSON []byte) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: Updating resource of type ", resourceType)
 
 	url := c.url + "config/" + resourceType + "/" + resourceName
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	return c.doHTTPRequest("PUT", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
 }
 
 func (c *NitroClient) updateUnnamedResource(resourceType string, resourceJSON []byte) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: Updating resource of type ", resourceType)
 
 	url := c.url + "config/" + resourceType
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	return c.doHTTPRequest("PUT", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
 }
 
 func (c *NitroClient) deleteResource(resourceType string, resourceName string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: Deleting resource of type ", resourceType)
 	var url string
 	if resourceName != "" {
 		url = c.url + fmt.Sprintf("config/%s/%s", resourceType, resourceName)
 	} else {
 		url = c.url + fmt.Sprintf("config/%s", resourceType)
 	}
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	return c.doHTTPRequest("DELETE", url, bytes.NewBuffer([]byte{}), deleteResponseHandler)
 
 }
 
 func (c *NitroClient) deleteResourceWithArgs(resourceType string, resourceName string, args []string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: Deleting resource of type ", resourceType, "with args ", args)
 	var url string
 	if resourceName != "" {
 		url = c.url + fmt.Sprintf("config/%s/%s?args=", resourceType, resourceName)
@@ -214,7 +192,6 @@ func (c *NitroClient) deleteResourceWithArgs(resourceType string, resourceName s
 		url = c.url + fmt.Sprintf("config/%s?args=", resourceType)
 	}
 	url = url + strings.Join(args, ",")
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	return c.doHTTPRequest("DELETE", url, bytes.NewBuffer([]byte{}), deleteResponseHandler)
 
@@ -232,7 +209,6 @@ func (c *NitroClient) deleteResourceWithArgsMap(resourceType string, resourceNam
 }
 
 func (c *NitroClient) unbindResource(resourceType string, resourceName string, boundResourceType string, boundResource string, bindingFilterName string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: Unbinding resource of type ", resourceType, " name", resourceName)
 	bindingName := resourceType + "_" + boundResourceType + "_binding"
 
 	url := c.url + "config/" + bindingName + "/" + resourceName + "?args=" + bindingFilterName + ":" + boundResource
@@ -242,7 +218,6 @@ func (c *NitroClient) unbindResource(resourceType string, resourceName string, b
 }
 
 func (c *NitroClient) listBoundResources(resourceName string, resourceType string, boundResourceType string, boundResourceFilterName string, boundResourceFilterValue string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: listing bound resources of type ", resourceType, ": ", resourceName)
 	var url string
 	if boundResourceFilterName == "" {
 		url = c.url + fmt.Sprintf("config/%s_%s_binding/%s", resourceType, boundResourceType, resourceName)
@@ -255,7 +230,6 @@ func (c *NitroClient) listBoundResources(resourceName string, resourceType strin
 }
 
 func (c *NitroClient) listFilteredResource(resourceType string, filter map[string]string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: listing resource of type ", resourceType, ", filter: ", filter)
 
 	var filter_strings []string
 	for key, value := range filter {
@@ -271,20 +245,17 @@ func (c *NitroClient) listFilteredResource(resourceType string, filter map[strin
 }
 
 func (c *NitroClient) listResource(resourceType string, resourceName string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: listing resource of type ", resourceType, ", name: ", resourceName)
 	url := c.url + "config/" + resourceType
 
 	if resourceName != "" {
 		url = c.url + fmt.Sprintf("config/%s/%s", resourceType, resourceName)
 	}
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	return c.doHTTPRequest("GET", url, bytes.NewBuffer([]byte{}), readResponseHandler)
 
 }
 
 func (c *NitroClient) listResourceWithArgs(resourceType string, resourceName string, args []string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: listing resource of type ", resourceType, ", name: ", resourceName, ", args:", args)
 	var url string
 
 	if resourceName != "" {
@@ -294,11 +265,9 @@ func (c *NitroClient) listResourceWithArgs(resourceType string, resourceName str
 	}
 	strArgs := strings.Join(args, ",")
 	url2 := url + "?args=" + strArgs
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	data, err := c.doHTTPRequest("GET", url2, bytes.NewBuffer([]byte{}), readResponseHandler)
 	if err != nil {
-		log.Println("[DEBUG] go-nitro: error listing with args, trying filter")
 		url2 = url + "?filter=" + strArgs
 		return c.doHTTPRequest("GET", url2, bytes.NewBuffer([]byte{}), readResponseHandler)
 	}
@@ -318,20 +287,17 @@ func (c *NitroClient) listResourceWithArgsMap(resourceType string, resourceName 
 }
 
 func (c *NitroClient) listStat(resourceType, resourceName string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: listing resource of type ", resourceType, ", name: ", resourceName)
 	url := c.url + "stat/" + resourceType
 
 	if resourceName != "" {
 		url = c.url + fmt.Sprintf("stat/%s/%s", resourceType, resourceName)
 	}
-	log.Println("[TRACE] go-nitro: url is ", url)
 
 	return c.doHTTPRequest("GET", url, bytes.NewBuffer([]byte{}), readResponseHandler)
 
 }
 
 func (c *NitroClient) enableFeatures(featureJSON []byte) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro Enabling features")
 	url := c.url + "config/nsfeature?action=enable"
 
 	return c.doHTTPRequest("POST", url, bytes.NewBuffer(featureJSON), createResponseHandler)
@@ -339,7 +305,6 @@ func (c *NitroClient) enableFeatures(featureJSON []byte) ([]byte, error) {
 }
 
 func (c *NitroClient) listEnabledFeatures() ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: listing features")
 	url := c.url + "config/nsfeature"
 
 	return c.doHTTPRequest("GET", url, bytes.NewBuffer([]byte{}), readResponseHandler)
@@ -347,7 +312,6 @@ func (c *NitroClient) listEnabledFeatures() ([]byte, error) {
 }
 
 func (c *NitroClient) saveConfig(saveJSON []byte) error {
-	log.Println("[DEBUG] go-nitro: Saving config")
 	url := c.url + "config/nsconfig?action=save"
 
 	_, err := c.doHTTPRequest("POST", url, bytes.NewBuffer(saveJSON), createResponseHandler)
@@ -356,7 +320,6 @@ func (c *NitroClient) saveConfig(saveJSON []byte) error {
 }
 
 func (c *NitroClient) clearConfig(clearJSON []byte) error {
-	log.Println("[DEBUG] go-nitro: Clearing config")
 	url := c.url + "config/nsconfig?action=clear"
 
 	_, err := c.doHTTPRequest("POST", url, bytes.NewBuffer(clearJSON), createResponseHandler)
