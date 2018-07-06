@@ -76,7 +76,6 @@ func NewNitroClientFromParams(params NitroParams) (*NitroClient, error) {
 	} else {
 		tr := &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-			MaxIdleConnsPerHost: 1,
 		}
 		c.client = &http.Client{Transport: tr}
 	}
