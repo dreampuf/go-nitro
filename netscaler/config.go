@@ -19,7 +19,7 @@ package netscaler
 import (
 	"encoding/json"
 	"fmt"
-		"strings"
+	"strings"
 )
 
 //AddResource adds a resource of supplied type and name

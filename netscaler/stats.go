@@ -1,8 +1,8 @@
 package netscaler
 
 import (
-	"fmt"
 	"encoding/json"
+	"fmt"
 )
 
 //FindStats returns the statistics of the supplied resource type if it exists. Use when the resource to be returned is an array

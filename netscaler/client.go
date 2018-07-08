@@ -26,6 +26,19 @@ import (
 	"strings"
 )
 
+// MaxConnsPerHost limits the number of connections simultaneously established
+// by Client. The limit exists to help avoid nitro error 446 (Connection limit
+// to CFE exceeded).
+const MaxConnsPerHost = 10
+
+const MaxIdleConnsPerHost = 5
+
+// connLimit is a semaphore used to limit the number of active connections.
+type connLimit chan bool
+
+func (cl connLimit) Wait() { cl <- true }
+func (cl connLimit) Done() { <-cl }
+
 //NitroParams encapsulates options to create a NitroClient
 type NitroParams struct {
 	Url       string
@@ -43,6 +56,7 @@ type NitroClient struct {
 	password  string
 	proxiedNs string
 	client    *http.Client
+	conn      connLimit
 }
 
 //NewNitroClient returns a usable NitroClient. Does not check validity of supplied parameters
@@ -54,6 +68,7 @@ func NewNitroClient(url string, username string, password string) *NitroClient {
 	c.username = username
 	c.password = password
 	c.client = &http.Client{}
+	c.conn = make(connLimit, MaxConnsPerHost)
 	return c
 }
 
@@ -75,11 +90,12 @@ func NewNitroClientFromParams(params NitroParams) (*NitroClient, error) {
 		c.client = &http.Client{}
 	} else {
 		tr := &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-			MaxIdleConnsPerHost: 1,
+			TLSClientConfig:     &tls.Config{InsecureSkipVerify: true},
+			MaxIdleConnsPerHost: MaxIdleConnsPerHost,
 		}
 		c.client = &http.Client{Transport: tr}
 	}
+	c.conn = make(connLimit, MaxConnsPerHost)
 	return c, nil
 }
 
