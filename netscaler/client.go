@@ -31,13 +31,11 @@ import (
 // to CFE exceeded).
 const MaxConnsPerHost = 10
 
-const MaxIdleConnsPerHost = 5
-
 // connLimit is a semaphore used to limit the number of active connections.
 type connLimit chan bool
 
-func (cl connLimit) Wait() { cl <- true }
-func (cl connLimit) Done() { <-cl }
+func (cl connLimit) Enqueue() { cl <- true }
+func (cl connLimit) Dequeue() { <-cl }
 
 //NitroParams encapsulates options to create a NitroClient
 type NitroParams struct {
@@ -90,8 +88,7 @@ func NewNitroClientFromParams(params NitroParams) (*NitroClient, error) {
 		c.client = &http.Client{}
 	} else {
 		tr := &http.Transport{
-			TLSClientConfig:     &tls.Config{InsecureSkipVerify: true},
-			MaxIdleConnsPerHost: MaxIdleConnsPerHost,
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		}
 		c.client = &http.Client{Transport: tr}
 	}
