@@ -108,9 +108,6 @@ func (c *NitroClient) createHTTPRequest(method string, url string, buff *bytes.B
 }
 
 func (c *NitroClient) doHTTPRequest(method string, url string, bytes *bytes.Buffer, respHandler responseHandlerFunc) ([]byte, error) {
-	c.conn.Enqueue()
-	defer c.conn.Dequeue()
-
 	req, err := c.createHTTPRequest(method, url, bytes)
 
 	resp, err := c.client.Do(req)
