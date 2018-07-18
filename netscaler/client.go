@@ -24,6 +24,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 //NitroParams encapsulates options to create a NitroClient
@@ -76,6 +77,8 @@ func NewNitroClientFromParams(params NitroParams) (*NitroClient, error) {
 	} else {
 		tr := &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+			MaxIdleConns: 50,
+			IdleConnTimeout: 10*time.Second,
 		}
 		c.client = &http.Client{Transport: tr}
 	}
