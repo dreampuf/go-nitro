@@ -23,6 +23,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"net/url"
 )
 
 type responseHandlerFunc func(resp *http.Response) ([]byte, error)
@@ -218,16 +219,19 @@ func (c *NitroClient) unbindResource(resourceType string, resourceName string, b
 }
 
 func (c *NitroClient) listBoundResources(resourceName string, resourceType string, boundResourceType string, boundResourceFilterName string, boundResourceFilterValue string) ([]byte, error) {
-	var url, querystring string
+	var urlstring, resourcePath string
+	query := url.Values{}
 	if resourceName == "" {
-		querystring = "bulkbindings=yes"
+		query.Set("bulkbindings", "yes")
+	} else {
+		resourcePath = "/" + resourceName
 	}
 	if boundResourceFilterName != "" {
-		querystring = querystring + fmt.Sprintf("&filter=%s:%s", boundResourceFilterName, boundResourceFilterValue)
+		query.Set("filter", fmt.Sprintf("%s:%s", boundResourceFilterName, boundResourceFilterValue))
 	}
-	url = c.url + fmt.Sprintf("config/%s_%s_binding/%s?%s", resourceType, boundResourceType, resourceName, querystring)
+	urlstring = c.url + fmt.Sprintf("config/%s_%s_binding%s?%s", resourceType, boundResourceType, resourcePath, query.Encode())
 
-	return c.doHTTPRequest("GET", url, bytes.NewBuffer([]byte{}), readResponseHandler)
+	return c.doHTTPRequest("GET", urlstring, bytes.NewBuffer([]byte{}), readResponseHandler)
 
 }
 
