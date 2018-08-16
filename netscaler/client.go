@@ -83,7 +83,7 @@ func NewNitroClientFromParams(params NitroParams) (*NitroClient, error) {
 			MaxIdleConns: 50,
 			IdleConnTimeout: params.Timeout,
 			TLSHandshakeTimeout: params.Timeout,
-			ResponseHeaderTimeout: params.Timeout,
+			//ResponseHeaderTimeout: params.Timeout,
 			ExpectContinueTimeout: params.Timeout,
 		}
 		c.client = &http.Client{
