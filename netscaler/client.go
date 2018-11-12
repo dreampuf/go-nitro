@@ -24,6 +24,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 //NitroParams encapsulates options to create a NitroClient
@@ -33,6 +34,7 @@ type NitroParams struct {
 	Password  string
 	ProxiedNs string
 	SslVerify bool
+	Timeout   time.Duration
 }
 
 //NitroClient has methods to configure the NetScaler
@@ -72,12 +74,12 @@ func NewNitroClientFromParams(params NitroParams) (*NitroClient, error) {
 	c.password = params.Password
 	c.proxiedNs = params.ProxiedNs
 	if params.SslVerify {
-		c.client = &http.Client{}
+		c.client = &http.Client{Timeout: params.Timeout}
 	} else {
 		tr := &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		}
-		c.client = &http.Client{Transport: tr}
+		c.client = &http.Client{Transport: tr, Timeout: params.Timeout}
 	}
 	return c, nil
 }
@@ -108,6 +110,7 @@ func NewNitroClientFromEnv() (*NitroClient, error) {
 		Password:  password,
 		ProxiedNs: proxiedNs,
 		SslVerify: sslVerify,
+		Timeout:   60 * time.Second,
 	}
 	return NewNitroClientFromParams(nitroParams)
 }
