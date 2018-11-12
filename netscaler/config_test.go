@@ -17,7 +17,6 @@ package netscaler
 
 import (
 	"fmt"
-	"log"
 	"math/rand"
 	"testing"
 	"time"

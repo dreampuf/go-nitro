@@ -1,7 +1,6 @@
 package netscaler
 
 import (
-	"log"
 	"testing"
 
 	"github.com/dreampuf/go-nitro/config/basic"
