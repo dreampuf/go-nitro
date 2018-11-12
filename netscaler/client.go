@@ -120,7 +120,7 @@ func NewNitroClientFromParams(params NitroParams) (*NitroClient, error) {
 		tr := &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		}
-		c.client = &http.Client{Transport: tr}
+		c.client = &http.Client{Transport: tr, Timeout: params.Timeout}
 	}
 	level := hclog.LevelFromString(params.LogLevel)
 	if level == hclog.NoLevel {
