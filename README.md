@@ -4,7 +4,7 @@
 The [NITRO](https://docs.citrix.com/en-us/netscaler/11-1/nitro-api/nitro-rest.html) API is the REST-like API to the Citrix NetScaler. This project provides a Golang SDK that can be used to make configuration API calls to a Citrix NetScaler.
 
 ## Usage
-Import the SDK from github.com/chiradeep/go-nitro/netscaler. Config objects are available at github.com/chiradeep/go-nitro/config.
+Import the SDK from github.com/dreampuf/go-nitro/netscaler. Config objects are available at github.com/dreampuf/go-nitro/config.
 Instantiate a client using `NewNitroClient`. To initialize the client from environment variables:
 
 ```
@@ -22,8 +22,8 @@ The general pattern for NetScaler config objects is some combination of  `AddRes
 package main
 
 import (
-        "github.com/chiradeep/go-nitro/config/lb"
-        "github.com/chiradeep/go-nitro/netscaler"
+        "github.com/dreampuf/go-nitro/config/lb"
+        "github.com/dreampuf/go-nitro/netscaler"
 )
 
 function main() {

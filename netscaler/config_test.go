@@ -22,11 +22,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/chiradeep/go-nitro/config/basic"
-	"github.com/chiradeep/go-nitro/config/lb"
-	"github.com/chiradeep/go-nitro/config/network"
-	"github.com/chiradeep/go-nitro/config/ns"
 	"os"
+
+	"github.com/dreampuf/go-nitro/config/basic"
+	"github.com/dreampuf/go-nitro/config/lb"
+	"github.com/dreampuf/go-nitro/config/network"
+	"github.com/dreampuf/go-nitro/config/ns"
 )
 
 var client *NitroClient

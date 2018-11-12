@@ -41,6 +41,7 @@ type NitroParams struct {
 //It abstracts the REST operations of the NITRO API
 type NitroClient struct {
 	url       string
+	statsURL  string
 	username  string
 	password  string
 	proxiedNs string
