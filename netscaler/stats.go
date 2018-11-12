@@ -1,7 +1,6 @@
 package netscaler
 
 import (
-	"log"
 	"fmt"
 	"encoding/json"
 )
