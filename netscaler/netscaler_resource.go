@@ -322,10 +322,14 @@ func (c *NitroClient) unbindResource(resourceType string, resourceName string, b
 func (c *NitroClient) listBoundResources(resourceName string, resourceType string, boundResourceType string, boundResourceFilterName string, boundResourceFilterValue string) ([]byte, error) {
 	c.logger.Trace("listing bound resources of type ", "resourceType", resourceType, "resourceName", resourceName)
 	var url string
+	resourceCondition := "/" + resourceName
+	if resourceName == "" {
+		resourceCondition = ""
+	}
 	if boundResourceFilterName == "" {
-		url = c.url + fmt.Sprintf("config/%s_%s_binding/%s", resourceType, boundResourceType, resourceName)
+		url = c.url + fmt.Sprintf("config/%s_%s_binding%s?bulkbindings=yes", resourceType, boundResourceType, resourceCondition)
 	} else {
-		url = c.url + fmt.Sprintf("config/%s_%s_binding/%s?filter=%s:%s", resourceType, boundResourceType, resourceName, boundResourceFilterName, boundResourceFilterValue)
+		url = c.url + fmt.Sprintf("config/%s_%s_binding%s?filter=%s:%s&bulkbindings=yes", resourceType, boundResourceType, resourceCondition, boundResourceFilterName, boundResourceFilterValue)
 	}
 
 	return c.doHTTPRequest("GET", url, bytes.NewBuffer([]byte{}), readResponseHandler)

@@ -1,4 +1,4 @@
-module github.com/chiradeep/go-nitro
+module github.com/dreampuf/go-nitro
 
 go 1.16
 
