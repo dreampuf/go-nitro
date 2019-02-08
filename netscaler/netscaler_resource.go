@@ -320,19 +320,23 @@ func (c *NitroClient) unbindResource(resourceType string, resourceName string, b
 }
 
 func (c *NitroClient) listBoundResources(resourceName string, resourceType string, boundResourceType string, boundResourceFilterName string, boundResourceFilterValue string) ([]byte, error) {
-	c.logger.Trace("listing bound resources of type ", "resourceType", resourceType, "resourceName", resourceName)
-	var url string
+	log.Println("[DEBUG] go-nitro: listing bound resources of type ", resourceType, ": ", resourceName)
+	var requestUrl string
+	query := url.Values{
+		"bulkbindings": []string{"yes"},
+	}
 	resourceCondition := "/" + resourceName
 	if resourceName == "" {
 		resourceCondition = ""
+		delete(query, "bulkbindings")
 	}
-	if boundResourceFilterName == "" {
-		url = c.url + fmt.Sprintf("config/%s_%s_binding%s?bulkbindings=yes", resourceType, boundResourceType, resourceCondition)
-	} else {
-		url = c.url + fmt.Sprintf("config/%s_%s_binding%s?filter=%s:%s&bulkbindings=yes", resourceType, boundResourceType, resourceCondition, boundResourceFilterName, boundResourceFilterValue)
+	if boundResourceFilterName != "" {
+		query["filter"] = []string{fmt.Sprintf("%s:%s", boundResourceFilterName, boundResourceFilterValue)}
 	}
 
-	return c.doHTTPRequest("GET", url, bytes.NewBuffer([]byte{}), readResponseHandler)
+	requestUrl = c.url + fmt.Sprintf("config/%s_%s_binding%s%s?%s", resourceType, boundResourceType, resourceCondition, query.Encode())
+
+	return c.doHTTPRequest("GET", requestUrl, bytes.NewBuffer([]byte{}), readResponseHandler)
 
 }
 
