@@ -334,7 +334,7 @@ func (c *NitroClient) listBoundResources(resourceName string, resourceType strin
 		query["filter"] = []string{fmt.Sprintf("%s:%s", boundResourceFilterName, boundResourceFilterValue)}
 	}
 
-	requestUrl = c.url + fmt.Sprintf("config/%s_%s_binding%s%s?%s", resourceType, boundResourceType, resourceCondition, query.Encode())
+	requestUrl = c.url + fmt.Sprintf("config/%s_%s_binding%s?%s", resourceType, boundResourceType, resourceCondition, query.Encode())
 
 	return c.doHTTPRequest("GET", requestUrl, bytes.NewBuffer([]byte{}), readResponseHandler)
 
