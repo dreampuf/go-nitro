@@ -23,7 +23,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"strings"
 
 	"github.com/hashicorp/go-hclog"
@@ -321,23 +320,22 @@ func (c *NitroClient) unbindResource(resourceType string, resourceName string, b
 
 func (c *NitroClient) listBoundResources(resourceName string, resourceType string, boundResourceType string, boundResourceFilterName string, boundResourceFilterValue string) ([]byte, error) {
 	log.Println("[DEBUG] go-nitro: listing bound resources of type ", resourceType, ": ", resourceName)
-	var requestUrl string
-	query := url.Values{
-		"bulkbindings": []string{"yes"},
-	}
+	var requestUrl, filter string
 	resourceCondition := "/" + resourceName
 	if resourceName == "" {
 		resourceCondition = ""
-		delete(query, "bulkbindings")
+		filter = "bulkbindings=yes"
 	}
 	if boundResourceFilterName != "" {
-		query["filter"] = []string{fmt.Sprintf("%s:%s", boundResourceFilterName, boundResourceFilterValue)}
+		if filter != "" {
+			filter += "&"
+		}
+		filter = filter + fmt.Sprintf("filter=%s:%s", boundResourceFilterName, boundResourceFilterValue)
 	}
 
-	requestUrl = c.url + fmt.Sprintf("config/%s_%s_binding%s?%s", resourceType, boundResourceType, resourceCondition, query.Encode())
+	requestUrl = c.url + fmt.Sprintf("config/%s_%s_binding%s?%s", resourceType, boundResourceType, resourceCondition, filter)
 
 	return c.doHTTPRequest("GET", requestUrl, bytes.NewBuffer([]byte{}), readResponseHandler)
-
 }
 
 func (c *NitroClient) listFilteredResource(resourceType string, filter map[string]string) ([]byte, error) {
