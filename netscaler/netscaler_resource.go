@@ -216,13 +216,8 @@ func (c *NitroClient) createResource(resourceType string, resourceJSON []byte) (
 func (c *NitroClient) applyResource(resourceType string, resourceJSON []byte) ([]byte, error) {
 	c.logger.Trace("Applying", "resourceType", resourceType)
 
-<<<<<<< HEAD
-	url := c.url + "config/" + resourceType + "?action=apply"
-	log.Println("[TRACE] go-nitro: url is ", url)
-=======
 	url := c.url + resourceType + "?action=apply"
 	c.logger.Trace("url is ", "url", url)
->>>>>>> chiradeep-master
 
 	return c.doHTTPRequest("POST", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
@@ -230,11 +225,6 @@ func (c *NitroClient) applyResource(resourceType string, resourceJSON []byte) ([
 
 func (c *NitroClient) actOnResource(resourceType string, resourceJSON []byte, action string) ([]byte, error) {
 	c.logger.Trace("acting on resource", "resourceType", resourceType)
-
-<<<<<<< HEAD
-	url := c.url + fmt.Sprintf("config/%s?action=%s", resourceType, action)
-	log.Println("[TRACE] go-nitro: url is ", url)
-=======
 	var url string
 	if action == "" {
 		url = c.url + fmt.Sprintf("%s", resourceType)
@@ -242,7 +232,6 @@ func (c *NitroClient) actOnResource(resourceType string, resourceJSON []byte, ac
 		url = c.url + fmt.Sprintf("%s?action=%s", resourceType, action)
 	}
 	c.logger.Trace("actOnResource ", "url", url)
->>>>>>> chiradeep-master
 
 	return c.doHTTPRequest("POST", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
@@ -251,13 +240,8 @@ func (c *NitroClient) actOnResource(resourceType string, resourceJSON []byte, ac
 func (c *NitroClient) changeResource(resourceType string, resourceName string, resourceJSON []byte) ([]byte, error) {
 	c.logger.Trace("changing resource", "resourceType", resourceType)
 
-<<<<<<< HEAD
-	url := c.url + "config/" + resourceType + "/" + resourceName + "?action=update"
-	log.Println("[TRACE] go-nitro: url is ", url)
-=======
 	url := c.url + resourceType + "/" + resourceName + "?action=update"
 	c.logger.Trace("changeResource", "url", url)
->>>>>>> chiradeep-master
 
 	return c.doHTTPRequest("POST", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
@@ -266,13 +250,8 @@ func (c *NitroClient) changeResource(resourceType string, resourceName string, r
 func (c *NitroClient) updateResource(resourceType string, resourceName string, resourceJSON []byte) ([]byte, error) {
 	c.logger.Trace("Updating resource ", "resourceType", resourceType)
 
-<<<<<<< HEAD
-	url := c.url + "config/" + resourceType + "/" + resourceName
-	log.Println("[TRACE] go-nitro: url is ", url)
-=======
 	url := c.url + resourceType + "/" + resourceName
 	c.logger.Trace("updateResource ", "url", url)
->>>>>>> chiradeep-master
 
 	return c.doHTTPRequest("PUT", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
@@ -281,13 +260,8 @@ func (c *NitroClient) updateResource(resourceType string, resourceName string, r
 func (c *NitroClient) updateUnnamedResource(resourceType string, resourceJSON []byte) ([]byte, error) {
 	c.logger.Trace("Updating unnamed resource", "resourceType", resourceType)
 
-<<<<<<< HEAD
-	url := c.url + "config/" + resourceType
-	log.Println("[TRACE] go-nitro: url is ", url)
-=======
 	url := c.url + resourceType
 	c.logger.Trace("updateUnnamedResource", "url", url)
->>>>>>> chiradeep-master
 
 	return c.doHTTPRequest("PUT", url, bytes.NewBuffer(resourceJSON), createResponseHandler)
 
