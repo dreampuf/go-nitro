@@ -1,6 +1,10 @@
 {
   "type" : "object",
   "properties" : {
+    "advancedepa" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
     "appflowlog" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
@@ -9,13 +13,16 @@
       "type" : "string",
       "enum" : [ "ON", "OFF" ]
     },
+    "authnprofile" : {
+      "type" : "string"
+    },
     "backupvserver" : {
       "type" : "string",
       "readonly" : true
     },
     "bindpoint" : {
       "type" : "string",
-      "enum" : [ "REQUEST", "RESPONSE", "ICA_REQUEST", "OTHERTCP_REQUEST" ],
+      "enum" : [ "REQUEST", "RESPONSE", "ICA_REQUEST", "OTHERTCP_REQUEST", "AAA_REQUEST", "AAA_RESPONSE" ],
       "readonly" : true
     },
     "cachetype" : {
@@ -26,6 +33,9 @@
     "cachevserver" : {
       "type" : "string",
       "readonly" : true
+    },
+    "certkeynames" : {
+      "type" : "string"
     },
     "cginfrahomepageredirect" : {
       "type" : "string",
@@ -38,6 +48,10 @@
     "comment" : {
       "type" : "string"
     },
+    "csvserver" : {
+      "type" : "string",
+      "readonly" : true
+    },
     "curaaausers" : {
       "type" : "integer",
       "readonly" : true
@@ -46,6 +60,18 @@
       "type" : "string",
       "enum" : [ "UP", "DOWN", "UNKNOWN", "BUSY", "OUT OF SERVICE", "GOING OUT OF SERVICE", "DOWN WHEN GOING OUT OF SERVICE", "NS_EMPTY_STR", "Unknown", "DISABLED" ],
       "readonly" : true
+    },
+    "curtotalusers" : {
+      "type" : "integer",
+      "readonly" : true
+    },
+    "deploymenttype" : {
+      "type" : "string",
+      "enum" : [ "NONE", "ICA_WEBINTERFACE", "ICA_STOREFRONT", "MOBILITY", "WIONNS" ]
+    },
+    "devicecert" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
     },
     "disableprimaryondown" : {
       "type" : "string",
@@ -64,12 +90,16 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "dtls" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
+    "epaprofileoptional" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
     "failedlogintimeout" : {
       "type" : "integer"
-    },
-    "gotopriorityexpression" : {
-      "type" : "string",
-      "readonly" : true
     },
     "groupextraction" : {
       "type" : "boolean",
@@ -82,6 +112,10 @@
       "type" : "string",
       "enum" : [ "ON", "OFF" ]
     },
+    "icaproxysessionmigration" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
     "icmpvsrresponse" : {
       "type" : "string",
       "enum" : [ "PASSIVE", "ACTIVE" ]
@@ -90,14 +124,37 @@
       "type" : "string",
       "readonly" : true
     },
+    "ipset" : {
+      "type" : "string"
+    },
     "ipv46" : {
       "type" : "string"
+    },
+    "l2conn" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
+    "linuxepapluginupgrade" : {
+      "type" : "string",
+      "enum" : [ "Always", "Essential", "Never" ]
     },
     "listenpolicy" : {
       "type" : "string"
     },
     "listenpriority" : {
       "type" : "integer"
+    },
+    "loginonce" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
+    "logoutonsmartcardremoval" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
+    "macepapluginupgrade" : {
+      "type" : "string",
+      "enum" : [ "Always", "Essential", "Never" ]
     },
     "map" : {
       "type" : "string",
@@ -119,9 +176,17 @@
     "newname" : {
       "type" : "string"
     },
-    "policy" : {
+    "ngname" : {
       "type" : "string",
       "readonly" : true
+    },
+    "nodefaultbindings" : {
+      "type" : "string",
+      "enum" : [ "YES", "NO" ],
+      "readonly" : true
+    },
+    "pcoipvserverprofilename" : {
+      "type" : "string"
     },
     "port" : {
       "type" : "integer"
@@ -131,12 +196,11 @@
       "enum" : [ "RULE", "URL" ],
       "readonly" : true
     },
-    "priority" : {
-      "type" : "integer",
-      "readonly" : true
-    },
     "range" : {
       "type" : "integer"
+    },
+    "rdpserverprofilename" : {
+      "type" : "string"
     },
     "redirect" : {
       "type" : "string",
@@ -147,9 +211,21 @@
       "type" : "string",
       "readonly" : true
     },
+    "response" : {
+      "type" : "string",
+      "readonly" : true
+    },
+    "rhistate" : {
+      "type" : "string",
+      "enum" : [ "PASSIVE", "ACTIVE" ]
+    },
     "rule" : {
       "type" : "string",
       "readonly" : true
+    },
+    "samesite" : {
+      "type" : "string",
+      "enum" : [ "None", "LAX", "STRICT" ]
     },
     "secondary" : {
       "type" : "boolean",
@@ -161,7 +237,7 @@
     },
     "servicetype" : {
       "type" : "string",
-      "enum" : [ "SSL" ]
+      "enum" : [ "SSL", "DTLS" ]
     },
     "somethod" : {
       "type" : "string",
@@ -202,14 +278,24 @@
       "enum" : [ "ENABLED", "DISABLED" ],
       "readonly" : true
     },
+    "userdomains" : {
+      "type" : "string"
+    },
     "value" : {
       "type" : "string",
       "enum" : [ "Certkey not bound", "SSL feature disabled" ],
       "readonly" : true
     },
+    "vserverfqdn" : {
+      "type" : "string"
+    },
     "weight" : {
       "type" : "integer",
       "readonly" : true
+    },
+    "windowsepapluginupgrade" : {
+      "type" : "string",
+      "enum" : [ "Always", "Essential", "Never" ]
     }
   },
   "$schema" : "http://json-schema.org/draft-04/schema#",

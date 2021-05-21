@@ -1,9 +1,20 @@
 {
   "type" : "object",
   "properties" : {
+    "alertonly" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
     "as_scan_location_xss" : {
       "type" : "string",
-      "enum" : [ "FORMFIELD", "HEADER", "COOKIE" ]
+      "enum" : [ "FORMFIELD", "HEADER", "COOKIE", "URL" ]
+    },
+    "as_value_expr_xss" : {
+      "type" : "string"
+    },
+    "as_value_type_xss" : {
+      "type" : "string",
+      "enum" : [ "Tag", "Attribute", "Pattern" ]
     },
     "comment" : {
       "type" : "string"
@@ -14,11 +25,22 @@
     "formactionurl_xss" : {
       "type" : "string"
     },
+    "isautodeployed" : {
+      "type" : "string",
+      "enum" : [ "AUTODEPLOYED", "NOTAUTODEPLOYED" ]
+    },
     "isregex_xss" : {
       "type" : "string",
       "enum" : [ "REGEX", "NOTREGEX" ]
     },
+    "isvalueregex_xss" : {
+      "type" : "string",
+      "enum" : [ "REGEX", "NOTREGEX" ]
+    },
     "name" : {
+      "type" : "string"
+    },
+    "resourceid" : {
       "type" : "string"
     },
     "state" : {

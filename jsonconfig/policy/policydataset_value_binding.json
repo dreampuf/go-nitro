@@ -1,6 +1,12 @@
 {
   "type" : "object",
   "properties" : {
+    "comment" : {
+      "type" : "string"
+    },
+    "endrange" : {
+      "type" : "string"
+    },
     "index" : {
       "type" : "integer"
     },

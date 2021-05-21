@@ -3,7 +3,7 @@
   "properties" : {
     "algorithm" : {
       "type" : "string",
-      "enum" : [ "RSASHA1" ]
+      "enum" : [ "RSASHA1", "RSASHA256", "RSASHA512" ]
     },
     "expires" : {
       "type" : "integer"
@@ -24,10 +24,16 @@
     "notificationperiod" : {
       "type" : "integer"
     },
+    "password" : {
+      "type" : "string"
+    },
     "privatekey" : {
       "type" : "string"
     },
     "publickey" : {
+      "type" : "string"
+    },
+    "src" : {
       "type" : "string"
     },
     "ttl" : {

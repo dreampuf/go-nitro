@@ -1,6 +1,10 @@
 {
   "type" : "object",
   "properties" : {
+    "alertonly" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
     "comment" : {
       "type" : "string"
     },
@@ -10,11 +14,18 @@
     "formactionurl_ffc" : {
       "type" : "string"
     },
+    "isautodeployed" : {
+      "type" : "string",
+      "enum" : [ "AUTODEPLOYED", "NOTAUTODEPLOYED" ]
+    },
     "isregex_ffc" : {
       "type" : "string",
       "enum" : [ "REGEX", "NOTREGEX" ]
     },
     "name" : {
+      "type" : "string"
+    },
+    "resourceid" : {
       "type" : "string"
     },
     "state" : {

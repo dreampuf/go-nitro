@@ -1,5 +1,5 @@
 SDK_ONLY_PKGS=$(shell go list ./... | grep -v "/vendor/" | grep -v "/example")
-SDK_TEST_ONLY_PKGS=$(shell go list ./... | grep -v "/vendor/" | grep -v "/config" | grep -v "/example")
+SDK_TEST_ONLY_PKGS=$(shell go list ./... | grep -v "/vendor/" | grep -v "/config" | grep -v "/example" | grep -v "/stats")
 
 all: build unit
 
@@ -25,4 +25,6 @@ lint:  build
 generate:
 	@echo "Generate go schema from json schema"
 	(cd tools; ./generate.sh)
+	@echo "Building config packages for sanity check"
+	(cd tools; ./buildpackages.sh)
 

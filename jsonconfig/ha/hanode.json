@@ -28,6 +28,10 @@
       "type" : "integer",
       "readonly" : true
     },
+    "haheartbeatifaces" : {
+      "type" : "string",
+      "readonly" : true
+    },
     "hamonifaces" : {
       "type" : "string",
       "readonly" : true
@@ -43,6 +47,10 @@
     "hasync" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
+    },
+    "hasyncfailurereason" : {
+      "type" : "string",
+      "readonly" : true
     },
     "hellointerval" : {
       "type" : "integer"
@@ -79,16 +87,17 @@
       "type" : "string",
       "readonly" : true
     },
-    "network" : {
-      "type" : "string",
-      "readonly" : true
-    },
     "pfifaces" : {
       "type" : "string",
       "readonly" : true
     },
     "routemonitor" : {
       "type" : "string",
+      "readonly" : true
+    },
+    "routemonitorstate" : {
+      "type" : "string",
+      "enum" : [ "UP", "DOWN" ],
       "readonly" : true
     },
     "ssl2" : {
@@ -100,6 +109,10 @@
       "type" : "string",
       "enum" : [ "Primary", "Secondary", "UNKNOWN" ],
       "readonly" : true
+    },
+    "syncstatusstrictmode" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
     },
     "syncvlan" : {
       "type" : "integer"

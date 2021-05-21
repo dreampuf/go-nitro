@@ -1,9 +1,20 @@
 {
   "type" : "object",
   "properties" : {
+    "alertonly" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
     "as_scan_location_sql" : {
       "type" : "string",
       "enum" : [ "FORMFIELD", "HEADER", "COOKIE" ]
+    },
+    "as_value_expr_sql" : {
+      "type" : "string"
+    },
+    "as_value_type_sql" : {
+      "type" : "string",
+      "enum" : [ "Keyword", "SpecialString", "Wildchar" ]
     },
     "comment" : {
       "type" : "string"
@@ -11,11 +22,22 @@
     "formactionurl_sql" : {
       "type" : "string"
     },
+    "isautodeployed" : {
+      "type" : "string",
+      "enum" : [ "AUTODEPLOYED", "NOTAUTODEPLOYED" ]
+    },
     "isregex_sql" : {
       "type" : "string",
       "enum" : [ "REGEX", "NOTREGEX" ]
     },
+    "isvalueregex_sql" : {
+      "type" : "string",
+      "enum" : [ "REGEX", "NOTREGEX" ]
+    },
     "name" : {
+      "type" : "string"
+    },
+    "resourceid" : {
       "type" : "string"
     },
     "sqlinjection" : {

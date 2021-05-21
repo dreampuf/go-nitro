@@ -1,6 +1,10 @@
 {
   "type" : "object",
   "properties" : {
+    "alertonly" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
     "comment" : {
       "type" : "string"
     },
@@ -10,11 +14,19 @@
     "creditcardnumberurl" : {
       "type" : "string"
     },
+    "isautodeployed" : {
+      "type" : "string",
+      "enum" : [ "AUTODEPLOYED", "NOTAUTODEPLOYED" ]
+    },
     "name" : {
       "type" : "string"
     },
-    "state" : {
+    "resourceid" : {
       "type" : "string"
+    },
+    "state" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
     }
   },
   "$schema" : "http://json-schema.org/draft-04/schema#",

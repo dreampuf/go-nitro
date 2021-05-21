@@ -5,7 +5,15 @@
       "type" : "boolean",
       "readonly" : true
     },
+    "adaptivetcp" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
     "agee" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
+    "apigateway" : {
       "type" : "boolean",
       "readonly" : true
     },
@@ -29,6 +37,10 @@
       "type" : "boolean",
       "readonly" : true
     },
+    "bot" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
     "cf" : {
       "type" : "boolean",
       "readonly" : true
@@ -49,11 +61,24 @@
       "type" : "boolean",
       "readonly" : true
     },
+    "cloudsubscriptionimage" : {
+      "type" : "string",
+      "enum" : [ "YES", "NO" ],
+      "readonly" : true
+    },
     "cluster" : {
       "type" : "boolean",
       "readonly" : true
     },
     "cmp" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
+    "contentaccelerator" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
+    "cqa" : {
       "type" : "boolean",
       "readonly" : true
     },
@@ -63,6 +88,10 @@
     },
     "cs" : {
       "type" : "boolean",
+      "readonly" : true
+    },
+    "daystoexpiration" : {
+      "type" : "integer",
       "readonly" : true
     },
     "delta" : {
@@ -75,6 +104,14 @@
     },
     "f_sslvpn_users" : {
       "type" : "integer",
+      "readonly" : true
+    },
+    "feo" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
+    "forwardproxy" : {
+      "type" : "boolean",
       "readonly" : true
     },
     "gslb" : {
@@ -113,11 +150,28 @@
       "type" : "boolean",
       "readonly" : true
     },
+    "issgwylic" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
     "isstandardlic" : {
       "type" : "boolean",
       "readonly" : true
     },
+    "isswglic" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
     "lb" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
+    "licensingmode" : {
+      "type" : "string",
+      "enum" : [ "Local", "Pooled", "CICO", "EXPRESS", "CPU", "CPU-Local" ],
+      "readonly" : true
+    },
+    "lsn" : {
       "type" : "boolean",
       "readonly" : true
     },
@@ -138,6 +192,18 @@
       "readonly" : true
     },
     "push" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
+    "rdpproxy" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
+    "remotecontentinspection" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
+    "rep" : {
       "type" : "boolean",
       "readonly" : true
     },
@@ -169,11 +235,19 @@
       "type" : "boolean",
       "readonly" : true
     },
+    "sslinterception" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
     "sslvpn" : {
       "type" : "boolean",
       "readonly" : true
     },
-    "vpath" : {
+    "urlfiltering" : {
+      "type" : "boolean",
+      "readonly" : true
+    },
+    "videooptimization" : {
       "type" : "boolean",
       "readonly" : true
     },

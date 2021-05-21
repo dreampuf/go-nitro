@@ -5,6 +5,9 @@
       "type" : "integer",
       "readonly" : true
     },
+    "adfsproxyprofile" : {
+      "type" : "string"
+    },
     "appflowlog" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
@@ -26,15 +29,23 @@
     "authnvsname" : {
       "type" : "string"
     },
+    "backuplbmethod" : {
+      "type" : "string",
+      "enum" : [ "ROUNDROBIN", "LEASTCONNECTION", "LEASTRESPONSETIME", "SOURCEIPHASH", "LEASTBANDWIDTH", "LEASTPACKETS", "CUSTOMLOAD" ]
+    },
     "backuppersistencetimeout" : {
       "type" : "integer"
     },
     "backupvserver" : {
       "type" : "string"
     },
+    "backupvserverstatus" : {
+      "type" : "string",
+      "readonly" : true
+    },
     "bindpoint" : {
       "type" : "string",
-      "enum" : [ "REQUEST", "RESPONSE" ],
+      "enum" : [ "REQUEST", "RESPONSE", "MQTT_JUMBO_REQ" ],
       "readonly" : true
     },
     "bypassaaaa" : {
@@ -102,6 +113,9 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "dnsprofilename" : {
+      "type" : "string"
+    },
     "dnsvservername" : {
       "type" : "string",
       "readonly" : true
@@ -117,10 +131,6 @@
     "effectivestate" : {
       "type" : "string",
       "enum" : [ "UP", "DOWN", "UNKNOWN", "BUSY", "OUT OF SERVICE", "GOING OUT OF SERVICE", "DOWN WHEN GOING OUT OF SERVICE", "NS_EMPTY_STR", "Unknown", "DISABLED" ],
-      "readonly" : true
-    },
-    "gotopriorityexpression" : {
-      "type" : "string",
       "readonly" : true
     },
     "groupname" : {
@@ -149,6 +159,9 @@
     "httpprofilename" : {
       "type" : "string"
     },
+    "httpsredirecturl" : {
+      "type" : "string"
+    },
     "icmpvsrresponse" : {
       "type" : "string",
       "enum" : [ "PASSIVE", "ACTIVE" ]
@@ -156,10 +169,6 @@
     "insertvserveripport" : {
       "type" : "string",
       "enum" : [ "OFF", "VIPADDR", "V6TOV4MAPPING" ]
-    },
-    "invoke" : {
-      "type" : "boolean",
-      "readonly" : true
     },
     "ipmapping" : {
       "type" : "string",
@@ -169,6 +178,9 @@
       "type" : "string"
     },
     "ippattern" : {
+      "type" : "string"
+    },
+    "ipset" : {
       "type" : "string"
     },
     "ipv46" : {
@@ -182,18 +194,12 @@
       "type" : "string",
       "enum" : [ "ON", "OFF" ]
     },
-    "labelname" : {
-      "type" : "string",
-      "readonly" : true
-    },
-    "labeltype" : {
-      "type" : "string",
-      "enum" : [ "reqvserver", "resvserver", "policylabel" ],
-      "readonly" : true
-    },
     "lbmethod" : {
       "type" : "string",
-      "enum" : [ "ROUNDROBIN", "LEASTCONNECTION", "LEASTRESPONSETIME", "URLHASH", "DOMAINHASH", "DESTINATIONIPHASH", "SOURCEIPHASH", "SRCIPDESTIPHASH", "LEASTBANDWIDTH", "LEASTPACKETS", "TOKEN", "SRCIPSRCPORTHASH", "LRTM", "CALLIDHASH", "CUSTOMLOAD", "LEASTREQUEST" ]
+      "enum" : [ "ROUNDROBIN", "LEASTCONNECTION", "LEASTRESPONSETIME", "URLHASH", "DOMAINHASH", "DESTINATIONIPHASH", "SOURCEIPHASH", "SRCIPDESTIPHASH", "LEASTBANDWIDTH", "LEASTPACKETS", "TOKEN", "SRCIPSRCPORTHASH", "LRTM", "CALLIDHASH", "CUSTOMLOAD", "LEASTREQUEST", "AUDITLOGHASH", "STATICPROXIMITY", "USER_TOKEN" ]
+    },
+    "lbprofilename" : {
+      "type" : "string"
     },
     "lbrrreason" : {
       "type" : "integer",
@@ -226,7 +232,7 @@
     },
     "mssqlserverversion" : {
       "type" : "string",
-      "enum" : [ "70", "2000", "2000SP1", "2005", "2008", "2008R2", "2012" ]
+      "enum" : [ "70", "2000", "2000SP1", "2005", "2008", "2008R2", "2012", "2014" ]
     },
     "mysqlcharacterset" : {
       "type" : "integer"
@@ -266,6 +272,15 @@
       "type" : "string",
       "readonly" : true
     },
+    "nodefaultbindings" : {
+      "type" : "string",
+      "enum" : [ "YES", "NO" ],
+      "readonly" : true
+    },
+    "oracleserverversion" : {
+      "type" : "string",
+      "enum" : [ "10G", "11G" ]
+    },
     "persistavpno" : {
       "type" : "object"
     },
@@ -275,14 +290,10 @@
     },
     "persistencetype" : {
       "type" : "string",
-      "enum" : [ "SOURCEIP", "COOKIEINSERT", "SSLSESSION", "RULE", "URLPASSIVE", "CUSTOMSERVERID", "DESTIP", "SRCIPDESTIP", "CALLID", "RTSPSID", "DIAMETER", "NONE" ]
+      "enum" : [ "SOURCEIP", "COOKIEINSERT", "SSLSESSION", "RULE", "URLPASSIVE", "CUSTOMSERVERID", "DESTIP", "SRCIPDESTIP", "CALLID", "RTSPSID", "DIAMETER", "FIXSESSION", "USERSESSION", "NONE" ]
     },
     "persistmask" : {
       "type" : "string"
-    },
-    "policyname" : {
-      "type" : "string",
-      "readonly" : true
     },
     "port" : {
       "type" : "integer"
@@ -295,6 +306,20 @@
       "type" : "string",
       "enum" : [ "RULE", "URL" ],
       "readonly" : true
+    },
+    "probeport" : {
+      "type" : "integer"
+    },
+    "probeprotocol" : {
+      "type" : "string",
+      "enum" : [ "TCP", "HTTP" ]
+    },
+    "probesuccessresponsecode" : {
+      "type" : "string"
+    },
+    "processlocal" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
     },
     "push" : {
       "type" : "string",
@@ -310,6 +335,9 @@
     "pushvserver" : {
       "type" : "string"
     },
+    "quicbridgeprofilename" : {
+      "type" : "string"
+    },
     "range" : {
       "type" : "integer"
     },
@@ -321,6 +349,9 @@
       "type" : "string",
       "enum" : [ "CACHE", "POLICY", "ORIGIN" ],
       "readonly" : true
+    },
+    "redirectfromport" : {
+      "type" : "integer"
     },
     "redirectportrewrite" : {
       "type" : "string",
@@ -334,6 +365,14 @@
     },
     "resrule" : {
       "type" : "string"
+    },
+    "retainconnectionsoncluster" : {
+      "type" : "string",
+      "enum" : [ "YES", "NO" ]
+    },
+    "rhistate" : {
+      "type" : "string",
+      "enum" : [ "PASSIVE", "ACTIVE" ]
     },
     "rtspnat" : {
       "type" : "string",
@@ -355,7 +394,7 @@
     },
     "servicetype" : {
       "type" : "string",
-      "enum" : [ "HTTP", "FTP", "TCP", "UDP", "SSL", "SSL_BRIDGE", "SSL_TCP", "DTLS", "NNTP", "DNS", "DHCPRA", "ANY", "SIP_UDP", "DNS_TCP", "RTSP", "PUSH", "SSL_PUSH", "RADIUS", "RDP", "MYSQL", "MSSQL", "DIAMETER", "SSL_DIAMETER", "TFTP" ]
+      "enum" : [ "HTTP", "FTP", "TCP", "UDP", "SSL", "SSL_BRIDGE", "SSL_TCP", "DTLS", "NNTP", "DNS", "DHCPRA", "ANY", "SIP_UDP", "SIP_TCP", "SIP_SSL", "DNS_TCP", "RTSP", "PUSH", "SSL_PUSH", "RADIUS", "RDP", "MYSQL", "MSSQL", "DIAMETER", "SSL_DIAMETER", "TFTP", "ORACLE", "SMPP", "SYSLOGTCP", "SYSLOGUDP", "FIX", "SSL_FIX", "PROXY", "USER_TCP", "USER_SSL_TCP", "QUIC", "IPFIX", "LOGSTREAM", "MONGO", "MONGO_TLS", "MQTT", "MQTT_TLS", "QUIC_BRIDGE" ]
     },
     "sessionless" : {
       "type" : "string",
@@ -403,6 +442,9 @@
       "type" : "integer",
       "readonly" : true
     },
+    "tcpprobeport" : {
+      "type" : "integer"
+    },
     "tcpprofilename" : {
       "type" : "string"
     },
@@ -427,6 +469,10 @@
       "type" : "integer",
       "readonly" : true
     },
+    "trofspersistence" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
     "type" : {
       "type" : "string",
       "enum" : [ "CONTENT", "ADDRESS" ],
@@ -449,6 +495,10 @@
     },
     "vipheader" : {
       "type" : "string"
+    },
+    "vsvrdynconnsothreshold" : {
+      "type" : "integer",
+      "readonly" : true
     },
     "weight" : {
       "type" : "integer"

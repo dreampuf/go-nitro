@@ -1,15 +1,26 @@
 {
   "type" : "object",
   "properties" : {
+    "advertiseondefaultpartition" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
     "arp" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
+    },
+    "arpowner" : {
+      "type" : "integer"
     },
     "arpresponse" : {
       "type" : "string",
       "enum" : [ "NONE", "ONE_VSERVER", "ALL_VSERVERS" ]
     },
     "bgp" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
+    "decrementttl" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
@@ -57,7 +68,7 @@
     },
     "iptype" : {
       "type" : "object",
-      "enum" : [ "SNIP", "VIP", "MIP", "NSIP", "GSLBsiteIP", "CLIP" ],
+      "enum" : [ "SNIP", "VIP", "NSIP", "GSLBsiteIP", "CLIP" ],
       "readonly" : true
     },
     "metric" : {
@@ -67,8 +78,20 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "mptcpadvertise" : {
+      "type" : "string",
+      "enum" : [ "YES", "NO" ]
+    },
     "netmask" : {
       "type" : "string"
+    },
+    "networkroute" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
+    "operationalarpowner" : {
+      "type" : "integer",
+      "readonly" : true
     },
     "ospf" : {
       "type" : "string",
@@ -84,6 +107,10 @@
     "ospflsatype" : {
       "type" : "string",
       "enum" : [ "TYPE1", "TYPE5" ]
+    },
+    "ownerdownresponse" : {
+      "type" : "string",
+      "enum" : [ "YES", "NO" ]
     },
     "ownernode" : {
       "type" : "integer"
@@ -108,6 +135,9 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "tag" : {
+      "type" : "integer"
+    },
     "td" : {
       "type" : "integer"
     },
@@ -117,7 +147,7 @@
     },
     "type" : {
       "type" : "string",
-      "enum" : [ "SNIP", "VIP", "MIP", "NSIP", "GSLBsiteIP", "CLIP" ]
+      "enum" : [ "SNIP", "VIP", "NSIP", "GSLBsiteIP", "CLIP" ]
     },
     "viprtadv2bsd" : {
       "type" : "boolean",
@@ -131,6 +161,14 @@
       "type" : "integer",
       "readonly" : true
     },
+    "vipvsrvrrhiactivecount" : {
+      "type" : "integer",
+      "readonly" : true
+    },
+    "vipvsrvrrhiactiveupcount" : {
+      "type" : "integer",
+      "readonly" : true
+    },
     "vrid" : {
       "type" : "integer"
     },
@@ -140,7 +178,7 @@
     },
     "vserverrhilevel" : {
       "type" : "string",
-      "enum" : [ "ONE_VSERVER", "ALL_VSERVERS", "NONE" ]
+      "enum" : [ "ONE_VSERVER", "ALL_VSERVERS", "NONE", "VSVR_CNTRLD" ]
     }
   },
   "$schema" : "http://json-schema.org/draft-04/schema#",

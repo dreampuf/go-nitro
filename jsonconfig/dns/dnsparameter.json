@@ -1,6 +1,23 @@
 {
   "type" : "object",
   "properties" : {
+    "builtin" : {
+      "type" : "object",
+      "enum" : [ "MODIFIABLE", "DELETABLE", "IMMUTABLE", "PARTITION_ALL" ],
+      "readonly" : true
+    },
+    "cacheecszeroprefix" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
+    "cachehitbypass" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
+    "cachenoexpire" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
     "cacherecords" : {
       "type" : "string",
       "enum" : [ "YES", "NO" ]
@@ -16,10 +33,30 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "ecsmaxsubnets" : {
+      "type" : "integer"
+    },
+    "feature" : {
+      "type" : "string",
+      "enum" : [ "WL", "WebLogging", "SP", "SurgeProtection", "LB", "LoadBalancing", "CS", "ContentSwitching", "CR", "CacheRedirection", "SC", "SureConnect", "CMP", "CMPcntl", "CompressionControl", "PQ", "PriorityQueuing", "HDOSP", "HttpDoSProtection", "SSLVPN", "AAA", "GSLB", "GlobalServerLoadBalancing", "SSL", "SSLOffload", "SSLOffloading", "CF", "ContentFiltering", "IC", "IntegratedCaching", "OSPF", "OSPFRouting", "RIP", "RIPRouting", "BGP", "BGPRouting", "REWRITE", "IPv6PT", "IPv6protocoltranslation", "AppFw", "ApplicationFirewall", "RESPONDER", "HTMLInjection", "push", "NSPush", "NetScalerPush", "AppFlow", "CloudBridge", "ISIS", "ISISRouting", "CH", "CallHome", "AppQoE", "ContentAccelerator", "SYSTEM", "RISE", "FEO", "LSN", "LargeScaleNAT", "RDPProxy", "Rep", "Reputation", "URLFiltering", "VideoOptimization", "ForwardProxy", "SSLInterception", "AdaptiveTCP", "CQA", "CI", "ContentInspection", "Bot", "APIGateway" ],
+      "readonly" : true
+    },
+    "maxcachesize" : {
+      "type" : "integer"
+    },
+    "maxnegativecachesize" : {
+      "type" : "integer"
+    },
+    "maxnegcachettl" : {
+      "type" : "integer"
+    },
     "maxpipeline" : {
       "type" : "integer"
     },
     "maxttl" : {
+      "type" : "integer"
+    },
+    "maxudppacketsize" : {
       "type" : "integer"
     },
     "minttl" : {
@@ -28,6 +65,13 @@
     "namelookuppriority" : {
       "type" : "string",
       "enum" : [ "WINS", "DNS" ]
+    },
+    "nxdomainratelimitthreshold" : {
+      "type" : "integer"
+    },
+    "nxdomainthresholdcrossed" : {
+      "type" : "integer",
+      "readonly" : true
     },
     "recursion" : {
       "type" : "string",
@@ -39,6 +83,10 @@
     },
     "retries" : {
       "type" : "integer"
+    },
+    "splitpktqueryprocessing" : {
+      "type" : "string",
+      "enum" : [ "ALLOW", "DROP" ]
     }
   },
   "$schema" : "http://json-schema.org/draft-04/schema#",

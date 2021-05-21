@@ -7,6 +7,8 @@ type Csvserver struct {
 	Authn401                  string `json:"authn401,omitempty"`
 	Authnprofile              string `json:"authnprofile,omitempty"`
 	Authnvsname               string `json:"authnvsname,omitempty"`
+	Backupip                  string `json:"backupip,omitempty"`
+	Backuppersistencetimeout  int    `json:"backuppersistencetimeout,omitempty"`
 	Backupvserver             string `json:"backupvserver,omitempty"`
 	Bindpoint                 string `json:"bindpoint,omitempty"`
 	Cacheable                 string `json:"cacheable,omitempty"`
@@ -15,26 +17,30 @@ type Csvserver struct {
 	Casesensitive             string `json:"casesensitive,omitempty"`
 	Clttimeout                int    `json:"clttimeout,omitempty"`
 	Comment                   string `json:"comment,omitempty"`
+	Cookiedomain              string `json:"cookiedomain,omitempty"`
+	Cookiename                string `json:"cookiename,omitempty"`
+	Cookietimeout             int    `json:"cookietimeout,omitempty"`
 	Curstate                  string `json:"curstate,omitempty"`
 	Dbprofilename             string `json:"dbprofilename,omitempty"`
 	Disableprimaryondown      string `json:"disableprimaryondown,omitempty"`
+	Dnsprofilename            string `json:"dnsprofilename,omitempty"`
+	Dnsrecordtype             string `json:"dnsrecordtype,omitempty"`
 	Dnsvservername            string `json:"dnsvservername,omitempty"`
 	Domain                    string `json:"domain,omitempty"`
+	Domainname                string `json:"domainname,omitempty"`
 	Downstateflush            string `json:"downstateflush,omitempty"`
-	Gotopriorityexpression    string `json:"gotopriorityexpression,omitempty"`
+	Dtls                      string `json:"dtls,omitempty"`
 	Gt2gb                     string `json:"gt2gb,omitempty"`
 	Homepage                  string `json:"homepage,omitempty"`
 	Httpprofilename           string `json:"httpprofilename,omitempty"`
 	Icmpvsrresponse           string `json:"icmpvsrresponse,omitempty"`
 	Insertvserveripport       string `json:"insertvserveripport,omitempty"`
-	Invoke                    bool   `json:"invoke,omitempty"`
 	Ip                        string `json:"ip,omitempty"`
 	Ipmask                    string `json:"ipmask,omitempty"`
 	Ippattern                 string `json:"ippattern,omitempty"`
+	Ipset                     string `json:"ipset,omitempty"`
 	Ipv46                     string `json:"ipv46,omitempty"`
 	L2conn                    string `json:"l2conn,omitempty"`
-	Labelname                 string `json:"labelname,omitempty"`
-	Labeltype                 string `json:"labeltype,omitempty"`
 	Lbvserver                 string `json:"lbvserver,omitempty"`
 	Listenpolicy              string `json:"listenpolicy,omitempty"`
 	Listenpriority            int    `json:"listenpriority,omitempty"`
@@ -47,10 +53,17 @@ type Csvserver struct {
 	Netprofile                string `json:"netprofile,omitempty"`
 	Newname                   string `json:"newname,omitempty"`
 	Ngname                    string `json:"ngname,omitempty"`
-	Policyname                string `json:"policyname,omitempty"`
+	Nodefaultbindings         string `json:"nodefaultbindings,omitempty"`
+	Oracleserverversion       string `json:"oracleserverversion,omitempty"`
+	Persistencebackup         string `json:"persistencebackup,omitempty"`
+	Persistenceid             int    `json:"persistenceid,omitempty"`
+	Persistencetype           string `json:"persistencetype,omitempty"`
+	Persistmask               string `json:"persistmask,omitempty"`
 	Port                      int    `json:"port,omitempty"`
 	Precedence                string `json:"precedence,omitempty"`
-	Priority                  int    `json:"priority,omitempty"`
+	Probeport                 int    `json:"probeport,omitempty"`
+	Probeprotocol             string `json:"probeprotocol,omitempty"`
+	Probesuccessresponsecode  string `json:"probesuccessresponsecode,omitempty"`
 	Push                      string `json:"push,omitempty"`
 	Pushlabel                 string `json:"pushlabel,omitempty"`
 	Pushmulticlients          string `json:"pushmulticlients,omitempty"`
@@ -59,10 +72,13 @@ type Csvserver struct {
 	Redirect                  string `json:"redirect,omitempty"`
 	Redirectportrewrite       string `json:"redirectportrewrite,omitempty"`
 	Redirecturl               string `json:"redirecturl,omitempty"`
+	Rhistate                  string `json:"rhistate,omitempty"`
 	Rtspnat                   string `json:"rtspnat,omitempty"`
+	Ruletype                  int    `json:"ruletype,omitempty"`
 	Sc                        string `json:"sc,omitempty"`
 	Servicename               string `json:"servicename,omitempty"`
 	Servicetype               string `json:"servicetype,omitempty"`
+	Sitedomainttl             int    `json:"sitedomainttl,omitempty"`
 	Sobackupaction            string `json:"sobackupaction,omitempty"`
 	Somethod                  string `json:"somethod,omitempty"`
 	Sopersistence             string `json:"sopersistence,omitempty"`
@@ -74,13 +90,19 @@ type Csvserver struct {
 	Stateupdate               string `json:"stateupdate,omitempty"`
 	Status                    int    `json:"status,omitempty"`
 	Targetlbvserver           string `json:"targetlbvserver,omitempty"`
+	Targettype                string `json:"targettype,omitempty"`
 	Targetvserver             string `json:"targetvserver,omitempty"`
+	Tcpprobeport              int    `json:"tcpprobeport,omitempty"`
 	Tcpprofilename            string `json:"tcpprofilename,omitempty"`
 	Td                        int    `json:"td,omitempty"`
 	Tickssincelaststatechange int    `json:"tickssincelaststatechange,omitempty"`
+	Timeout                   int    `json:"timeout,omitempty"`
+	Ttl                       int    `json:"ttl,omitempty"`
 	Type                      string `json:"type,omitempty"`
 	Url                       string `json:"url,omitempty"`
+	V6persistmasklen          int    `json:"v6persistmasklen,omitempty"`
 	Value                     string `json:"value,omitempty"`
+	Version                   int    `json:"version,omitempty"`
 	Vipheader                 string `json:"vipheader,omitempty"`
 	Weight                    int    `json:"weight,omitempty"`
 }

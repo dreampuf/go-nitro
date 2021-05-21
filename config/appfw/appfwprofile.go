@@ -3,17 +3,25 @@ package appfw
 type Appfwprofile struct {
 	Addcookieflags                             string      `json:"addcookieflags,omitempty"`
 	Archivename                                string      `json:"archivename,omitempty"`
+	Augment                                    bool        `json:"augment,omitempty"`
 	Bufferoverflowaction                       interface{} `json:"bufferoverflowaction,omitempty"`
 	Bufferoverflowmaxcookielength              int         `json:"bufferoverflowmaxcookielength,omitempty"`
 	Bufferoverflowmaxheaderlength              int         `json:"bufferoverflowmaxheaderlength,omitempty"`
+	Bufferoverflowmaxquerylength               int         `json:"bufferoverflowmaxquerylength,omitempty"`
+	Bufferoverflowmaxtotalheaderlength         int         `json:"bufferoverflowmaxtotalheaderlength,omitempty"`
 	Bufferoverflowmaxurllength                 int         `json:"bufferoverflowmaxurllength,omitempty"`
 	Builtin                                    bool        `json:"builtin,omitempty"`
 	Canonicalizehtmlresponse                   string      `json:"canonicalizehtmlresponse,omitempty"`
 	Checkrequestheaders                        string      `json:"checkrequestheaders,omitempty"`
+	Cmdinjectionaction                         interface{} `json:"cmdinjectionaction,omitempty"`
+	Cmdinjectiontype                           string      `json:"cmdinjectiontype,omitempty"`
 	Comment                                    string      `json:"comment,omitempty"`
+	Contenttypeaction                          interface{} `json:"contenttypeaction,omitempty"`
 	Cookieconsistencyaction                    interface{} `json:"cookieconsistencyaction,omitempty"`
 	Cookieencryption                           string      `json:"cookieencryption,omitempty"`
+	Cookiehijackingaction                      interface{} `json:"cookiehijackingaction,omitempty"`
 	Cookieproxying                             string      `json:"cookieproxying,omitempty"`
+	Cookiesamesiteattribute                    string      `json:"cookiesamesiteattribute,omitempty"`
 	Cookietransforms                           string      `json:"cookietransforms,omitempty"`
 	Creditcard                                 interface{} `json:"creditcard,omitempty"`
 	Creditcardaction                           interface{} `json:"creditcardaction,omitempty"`
@@ -31,6 +39,8 @@ type Appfwprofile struct {
 	Defaultfieldformattype                     string      `json:"defaultfieldformattype,omitempty"`
 	Defaults                                   string      `json:"defaults,omitempty"`
 	Denyurlaction                              interface{} `json:"denyurlaction,omitempty"`
+	Dosecurecreditcardlogging                  string      `json:"dosecurecreditcardlogging,omitempty"`
+	Dynamiclearning                            interface{} `json:"dynamiclearning,omitempty"`
 	Enableformtagging                          string      `json:"enableformtagging,omitempty"`
 	Errorurl                                   string      `json:"errorurl,omitempty"`
 	Excludefileuploadfromchecks                string      `json:"excludefileuploadfromchecks,omitempty"`
@@ -38,38 +48,78 @@ type Appfwprofile struct {
 	Fieldconsistencyaction                     interface{} `json:"fieldconsistencyaction,omitempty"`
 	Fieldformataction                          interface{} `json:"fieldformataction,omitempty"`
 	Fileuploadmaxnum                           int         `json:"fileuploadmaxnum,omitempty"`
+	Fileuploadtypesaction                      interface{} `json:"fileuploadtypesaction,omitempty"`
 	Htmlerrorobject                            string      `json:"htmlerrorobject,omitempty"`
+	Htmlerrorstatuscode                        int         `json:"htmlerrorstatuscode,omitempty"`
+	Htmlerrorstatusmessage                     string      `json:"htmlerrorstatusmessage,omitempty"`
+	Importprofilename                          string      `json:"importprofilename,omitempty"`
+	Infercontenttypexmlpayloadaction           interface{} `json:"infercontenttypexmlpayloadaction,omitempty"`
+	Insertcookiesamesiteattribute              string      `json:"insertcookiesamesiteattribute,omitempty"`
+	Inspectcontenttypes                        interface{} `json:"inspectcontenttypes,omitempty"`
+	Inspectquerycontenttypes                   interface{} `json:"inspectquerycontenttypes,omitempty"`
 	Invalidpercenthandling                     string      `json:"invalidpercenthandling,omitempty"`
+	Jsoncmdinjectionaction                     interface{} `json:"jsoncmdinjectionaction,omitempty"`
+	Jsoncmdinjectiontype                       string      `json:"jsoncmdinjectiontype,omitempty"`
+	Jsondosaction                              interface{} `json:"jsondosaction,omitempty"`
+	Jsonerrorobject                            string      `json:"jsonerrorobject,omitempty"`
+	Jsonerrorstatuscode                        int         `json:"jsonerrorstatuscode,omitempty"`
+	Jsonerrorstatusmessage                     string      `json:"jsonerrorstatusmessage,omitempty"`
+	Jsonsqlinjectionaction                     interface{} `json:"jsonsqlinjectionaction,omitempty"`
+	Jsonsqlinjectiongrammar                    string      `json:"jsonsqlinjectiongrammar,omitempty"`
+	Jsonsqlinjectiontype                       string      `json:"jsonsqlinjectiontype,omitempty"`
+	Jsonxssaction                              interface{} `json:"jsonxssaction,omitempty"`
+	Learning                                   string      `json:"learning,omitempty"`
 	Logeverypolicyhit                          string      `json:"logeverypolicyhit,omitempty"`
+	Matchurlstring                             string      `json:"matchurlstring,omitempty"`
+	Multipleheaderaction                       interface{} `json:"multipleheaderaction,omitempty"`
 	Name                                       string      `json:"name,omitempty"`
+	Optimizepartialreqs                        string      `json:"optimizepartialreqs,omitempty"`
+	Overwrite                                  bool        `json:"overwrite,omitempty"`
+	Percentdecoderecursively                   string      `json:"percentdecoderecursively,omitempty"`
 	Postbodylimit                              int         `json:"postbodylimit,omitempty"`
+	Postbodylimitaction                        interface{} `json:"postbodylimitaction,omitempty"`
+	Postbodylimitsignature                     int         `json:"postbodylimitsignature,omitempty"`
 	Refererheadercheck                         string      `json:"refererheadercheck,omitempty"`
+	Relaxationrules                            bool        `json:"relaxationrules,omitempty"`
+	Replaceurlstring                           string      `json:"replaceurlstring,omitempty"`
 	Requestcontenttype                         string      `json:"requestcontenttype,omitempty"`
 	Responsecontenttype                        string      `json:"responsecontenttype,omitempty"`
+	Rfcprofile                                 string      `json:"rfcprofile,omitempty"`
 	Semicolonfieldseparator                    string      `json:"semicolonfieldseparator,omitempty"`
 	Sessionlessfieldconsistency                string      `json:"sessionlessfieldconsistency,omitempty"`
 	Sessionlessurlclosure                      string      `json:"sessionlessurlclosure,omitempty"`
 	Signatures                                 string      `json:"signatures,omitempty"`
 	Sqlinjectionaction                         interface{} `json:"sqlinjectionaction,omitempty"`
+	Sqlinjectionchecksqlwildchars              string      `json:"sqlinjectionchecksqlwildchars,omitempty"`
+	Sqlinjectiongrammar                        string      `json:"sqlinjectiongrammar,omitempty"`
 	Sqlinjectiononlycheckfieldswithsqlchars    string      `json:"sqlinjectiononlycheckfieldswithsqlchars,omitempty"`
 	Sqlinjectionparsecomments                  string      `json:"sqlinjectionparsecomments,omitempty"`
 	Sqlinjectiontransformspecialchars          string      `json:"sqlinjectiontransformspecialchars,omitempty"`
+	Sqlinjectiontype                           string      `json:"sqlinjectiontype,omitempty"`
 	Starturlaction                             interface{} `json:"starturlaction,omitempty"`
 	Starturlclosure                            string      `json:"starturlclosure,omitempty"`
 	State                                      string      `json:"state,omitempty"`
+	Streaming                                  string      `json:"streaming,omitempty"`
 	Stripcomments                              string      `json:"stripcomments,omitempty"`
 	Striphtmlcomments                          string      `json:"striphtmlcomments,omitempty"`
 	Stripxmlcomments                           string      `json:"stripxmlcomments,omitempty"`
+	Trace                                      string      `json:"trace,omitempty"`
 	Type                                       interface{} `json:"type,omitempty"`
+	Urldecoderequestcookies                    string      `json:"urldecoderequestcookies,omitempty"`
 	Usehtmlerrorobject                         string      `json:"usehtmlerrorobject,omitempty"`
+	Verboseloglevel                            string      `json:"verboseloglevel,omitempty"`
 	Xmlattachmentaction                        interface{} `json:"xmlattachmentaction,omitempty"`
 	Xmldosaction                               interface{} `json:"xmldosaction,omitempty"`
 	Xmlerrorobject                             string      `json:"xmlerrorobject,omitempty"`
+	Xmlerrorstatuscode                         int         `json:"xmlerrorstatuscode,omitempty"`
+	Xmlerrorstatusmessage                      string      `json:"xmlerrorstatusmessage,omitempty"`
 	Xmlformataction                            interface{} `json:"xmlformataction,omitempty"`
 	Xmlsoapfaultaction                         interface{} `json:"xmlsoapfaultaction,omitempty"`
 	Xmlsqlinjectionaction                      interface{} `json:"xmlsqlinjectionaction,omitempty"`
+	Xmlsqlinjectionchecksqlwildchars           string      `json:"xmlsqlinjectionchecksqlwildchars,omitempty"`
 	Xmlsqlinjectiononlycheckfieldswithsqlchars string      `json:"xmlsqlinjectiononlycheckfieldswithsqlchars,omitempty"`
 	Xmlsqlinjectionparsecomments               string      `json:"xmlsqlinjectionparsecomments,omitempty"`
+	Xmlsqlinjectiontype                        string      `json:"xmlsqlinjectiontype,omitempty"`
 	Xmlvalidationaction                        interface{} `json:"xmlvalidationaction,omitempty"`
 	Xmlwsiaction                               interface{} `json:"xmlwsiaction,omitempty"`
 	Xmlxssaction                               interface{} `json:"xmlxssaction,omitempty"`

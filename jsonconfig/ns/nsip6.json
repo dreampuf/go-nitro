@@ -1,10 +1,18 @@
 {
   "type" : "object",
   "properties" : {
+    "advertiseondefaultpartition" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
     "curstate" : {
       "type" : "string",
       "enum" : [ "DISABLED", "ENABLED" ],
       "readonly" : true
+    },
+    "decrementhoplimit" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
     },
     "dynamicrouting" : {
       "type" : "string",
@@ -31,7 +39,7 @@
     },
     "iptype" : {
       "type" : "object",
-      "enum" : [ "NSIP", "VIP", "SNIP", "GSLBsiteIP", "ADNSsvcIP", "CLIP" ],
+      "enum" : [ "NSIP", "VIP", "SNIP", "GSLBsiteIP", "ADNSsvcIP", "RADIUSListenersvcIP", "CLIP" ],
       "readonly" : true
     },
     "ipv6address" : {
@@ -47,9 +55,24 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "mptcpadvertise" : {
+      "type" : "string",
+      "enum" : [ "YES", "NO" ]
+    },
     "nd" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
+    },
+    "ndowner" : {
+      "type" : "integer"
+    },
+    "networkroute" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
+    "operationalndowner" : {
+      "type" : "integer",
+      "readonly" : true
     },
     "ospf6lsatype" : {
       "type" : "string",
@@ -57,6 +80,10 @@
     },
     "ospfarea" : {
       "type" : "integer"
+    },
+    "ownerdownresponse" : {
+      "type" : "string",
+      "enum" : [ "YES", "NO" ]
     },
     "ownernode" : {
       "type" : "integer"
@@ -86,6 +113,9 @@
       "enum" : [ "Stand-alone", "HA", "Cluster" ],
       "readonly" : true
     },
+    "tag" : {
+      "type" : "integer"
+    },
     "td" : {
       "type" : "integer"
     },
@@ -95,7 +125,7 @@
     },
     "type" : {
       "type" : "string",
-      "enum" : [ "NSIP", "VIP", "SNIP", "GSLBsiteIP", "ADNSsvcIP", "CLIP" ]
+      "enum" : [ "NSIP", "VIP", "SNIP", "GSLBsiteIP", "ADNSsvcIP", "RADIUSListenersvcIP", "CLIP" ]
     },
     "viprtadv2bsd" : {
       "type" : "boolean",
@@ -112,13 +142,16 @@
     "vlan" : {
       "type" : "integer"
     },
+    "vrid6" : {
+      "type" : "integer"
+    },
     "vserver" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
     "vserverrhilevel" : {
       "type" : "string",
-      "enum" : [ "ONE_VSERVER", "ALL_VSERVERS", "NONE" ]
+      "enum" : [ "ONE_VSERVER", "ALL_VSERVERS", "NONE", "VSVR_CNTRLD" ]
     }
   },
   "$schema" : "http://json-schema.org/draft-04/schema#",

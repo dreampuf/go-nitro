@@ -33,6 +33,7 @@ type Route struct {
 	Netmask           string      `json:"netmask,omitempty"`
 	Network           string      `json:"network,omitempty"`
 	Ospf              bool        `json:"ospf,omitempty"`
+	Ownergroup        string      `json:"ownergroup,omitempty"`
 	Permanent         bool        `json:"permanent,omitempty"`
 	Protocol          interface{} `json:"protocol,omitempty"`
 	Retain            int         `json:"retain,omitempty"`
@@ -46,5 +47,6 @@ type Route struct {
 	Totalprobes       int         `json:"totalprobes,omitempty"`
 	Tunnel            bool        `json:"tunnel,omitempty"`
 	Type              bool        `json:"type,omitempty"`
+	Vlan              int         `json:"vlan,omitempty"`
 	Weight            int         `json:"weight,omitempty"`
 }

@@ -9,6 +9,9 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "bridgeagetimeout" : {
+      "type" : "integer"
+    },
     "garponvridintf" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
@@ -47,7 +50,15 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "stopmacmoveupdate" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
     "usemymac" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
+    "usenetprofilebsdtraffic" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     }

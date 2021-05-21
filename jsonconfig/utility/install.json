@@ -1,0 +1,26 @@
+{
+  "type" : "object",
+  "properties" : {
+    "a" : {
+      "type" : "boolean"
+    },
+    "enhancedupgrade" : {
+      "type" : "boolean"
+    },
+    "l" : {
+      "type" : "boolean"
+    },
+    "resizeswapvar" : {
+      "type" : "boolean"
+    },
+    "url" : {
+      "type" : "string"
+    },
+    "y" : {
+      "type" : "boolean"
+    }
+  },
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "id" : "install",
+  "title" : "install"
+}

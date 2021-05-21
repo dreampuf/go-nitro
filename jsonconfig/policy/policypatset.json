@@ -1,6 +1,9 @@
 {
   "type" : "object",
   "properties" : {
+    "comment" : {
+      "type" : "string"
+    },
     "description" : {
       "type" : "string",
       "readonly" : true
@@ -10,6 +13,9 @@
       "enum" : [ "Auto-generated", "User-defined" ]
     },
     "name" : {
+      "type" : "string"
+    },
+    "patsetfile" : {
       "type" : "string"
     }
   },

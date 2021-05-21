@@ -1,6 +1,10 @@
 {
   "type" : "object",
   "properties" : {
+    "alertonly" : {
+      "type" : "string",
+      "enum" : [ "ON", "OFF" ]
+    },
     "as_scan_location_xmlsql" : {
       "type" : "string",
       "enum" : [ "ELEMENT", "ATTRIBUTE" ]
@@ -8,11 +12,18 @@
     "comment" : {
       "type" : "string"
     },
+    "isautodeployed" : {
+      "type" : "string",
+      "enum" : [ "AUTODEPLOYED", "NOTAUTODEPLOYED" ]
+    },
     "isregex_xmlsql" : {
       "type" : "string",
       "enum" : [ "REGEX", "NOTREGEX" ]
     },
     "name" : {
+      "type" : "string"
+    },
+    "resourceid" : {
       "type" : "string"
     },
     "state" : {

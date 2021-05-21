@@ -5,10 +5,20 @@
       "type" : "integer",
       "readonly" : true
     },
+    "bindpoint" : {
+      "type" : "string",
+      "enum" : [ "REQUEST", "RESPONSE", "ICA_REQUEST", "OTHERTCP_REQUEST", "AAA_REQUEST", "AAA_RESPONSE" ]
+    },
+    "gotopriorityexpression" : {
+      "type" : "string"
+    },
     "groupextraction" : {
       "type" : "boolean"
     },
     "name" : {
+      "type" : "string"
+    },
+    "nextfactor" : {
       "type" : "string"
     },
     "policy" : {

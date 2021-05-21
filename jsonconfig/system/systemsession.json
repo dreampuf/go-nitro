@@ -4,6 +4,11 @@
     "all" : {
       "type" : "boolean"
     },
+    "clienttype" : {
+      "type" : "string",
+      "enum" : [ "CLI", "CONSOLE", "API", "GUI" ],
+      "readonly" : true
+    },
     "currentconn" : {
       "type" : "boolean",
       "readonly" : true
@@ -16,12 +21,24 @@
       "type" : "string",
       "readonly" : true
     },
+    "lastactivitytimelocal" : {
+      "type" : "string",
+      "readonly" : true
+    },
     "logintime" : {
+      "type" : "string",
+      "readonly" : true
+    },
+    "logintimelocal" : {
       "type" : "string",
       "readonly" : true
     },
     "numofconnections" : {
       "type" : "integer",
+      "readonly" : true
+    },
+    "partitionname" : {
+      "type" : "string",
       "readonly" : true
     },
     "sid" : {

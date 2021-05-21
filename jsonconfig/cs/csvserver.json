@@ -22,12 +22,18 @@
     "authnvsname" : {
       "type" : "string"
     },
+    "backupip" : {
+      "type" : "string"
+    },
+    "backuppersistencetimeout" : {
+      "type" : "integer"
+    },
     "backupvserver" : {
       "type" : "string"
     },
     "bindpoint" : {
       "type" : "string",
-      "enum" : [ "REQUEST", "RESPONSE" ],
+      "enum" : [ "REQUEST", "RESPONSE", "ICA_REQUEST", "OTHERTCP_REQUEST", "MQTT_JUMBO_REQ" ],
       "readonly" : true
     },
     "cacheable" : {
@@ -53,6 +59,15 @@
     "comment" : {
       "type" : "string"
     },
+    "cookiedomain" : {
+      "type" : "string"
+    },
+    "cookiename" : {
+      "type" : "string"
+    },
+    "cookietimeout" : {
+      "type" : "integer"
+    },
     "curstate" : {
       "type" : "string",
       "enum" : [ "UP", "DOWN", "UNKNOWN", "BUSY", "OUT OF SERVICE", "GOING OUT OF SERVICE", "DOWN WHEN GOING OUT OF SERVICE", "NS_EMPTY_STR", "Unknown", "DISABLED" ],
@@ -65,6 +80,13 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "dnsprofilename" : {
+      "type" : "string"
+    },
+    "dnsrecordtype" : {
+      "type" : "string",
+      "enum" : [ "A", "AAAA", "CNAME", "NAPTR" ]
+    },
     "dnsvservername" : {
       "type" : "string",
       "readonly" : true
@@ -73,13 +95,16 @@
       "type" : "string",
       "readonly" : true
     },
+    "domainname" : {
+      "type" : "string"
+    },
     "downstateflush" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
-    "gotopriorityexpression" : {
+    "dtls" : {
       "type" : "string",
-      "readonly" : true
+      "enum" : [ "ON", "OFF" ]
     },
     "gt2gb" : {
       "type" : "string",
@@ -101,10 +126,6 @@
       "type" : "string",
       "enum" : [ "OFF", "VIPADDR", "V6TOV4MAPPING" ]
     },
-    "invoke" : {
-      "type" : "boolean",
-      "readonly" : true
-    },
     "ip" : {
       "type" : "string",
       "readonly" : true
@@ -115,21 +136,15 @@
     "ippattern" : {
       "type" : "string"
     },
+    "ipset" : {
+      "type" : "string"
+    },
     "ipv46" : {
       "type" : "string"
     },
     "l2conn" : {
       "type" : "string",
       "enum" : [ "ON", "OFF" ]
-    },
-    "labelname" : {
-      "type" : "string",
-      "readonly" : true
-    },
-    "labeltype" : {
-      "type" : "string",
-      "enum" : [ "reqvserver", "resvserver", "policylabel" ],
-      "readonly" : true
     },
     "lbvserver" : {
       "type" : "string",
@@ -143,7 +158,7 @@
     },
     "mssqlserverversion" : {
       "type" : "string",
-      "enum" : [ "70", "2000", "2000SP1", "2005", "2008", "2008R2", "2012" ]
+      "enum" : [ "70", "2000", "2000SP1", "2005", "2008", "2008R2", "2012", "2014" ]
     },
     "mysqlcharacterset" : {
       "type" : "integer"
@@ -170,9 +185,28 @@
       "type" : "string",
       "readonly" : true
     },
-    "policyname" : {
+    "nodefaultbindings" : {
       "type" : "string",
+      "enum" : [ "YES", "NO" ],
       "readonly" : true
+    },
+    "oracleserverversion" : {
+      "type" : "string",
+      "enum" : [ "10G", "11G" ]
+    },
+    "persistencebackup" : {
+      "type" : "string",
+      "enum" : [ "SOURCEIP", "NONE" ]
+    },
+    "persistenceid" : {
+      "type" : "integer"
+    },
+    "persistencetype" : {
+      "type" : "string",
+      "enum" : [ "SOURCEIP", "COOKIEINSERT", "SSLSESSION", "NONE" ]
+    },
+    "persistmask" : {
+      "type" : "string"
     },
     "port" : {
       "type" : "integer"
@@ -181,9 +215,15 @@
       "type" : "string",
       "enum" : [ "RULE", "URL" ]
     },
-    "priority" : {
-      "type" : "integer",
-      "readonly" : true
+    "probeport" : {
+      "type" : "integer"
+    },
+    "probeprotocol" : {
+      "type" : "string",
+      "enum" : [ "TCP", "HTTP" ]
+    },
+    "probesuccessresponsecode" : {
+      "type" : "string"
     },
     "push" : {
       "type" : "string",
@@ -214,9 +254,17 @@
     "redirecturl" : {
       "type" : "string"
     },
+    "rhistate" : {
+      "type" : "string",
+      "enum" : [ "PASSIVE", "ACTIVE" ]
+    },
     "rtspnat" : {
       "type" : "string",
       "enum" : [ "ON", "OFF" ]
+    },
+    "ruletype" : {
+      "type" : "integer",
+      "readonly" : true
     },
     "sc" : {
       "type" : "string",
@@ -229,7 +277,10 @@
     },
     "servicetype" : {
       "type" : "string",
-      "enum" : [ "HTTP", "SSL", "TCP", "FTP", "RTSP", "SSL_TCP", "UDP", "DNS", "SIP_UDP", "ANY", "RADIUS", "RDP", "MYSQL", "MSSQL", "DIAMETER", "SSL_DIAMETER" ]
+      "enum" : [ "HTTP", "SSL", "TCP", "FTP", "RTSP", "SSL_TCP", "UDP", "DNS", "SIP_UDP", "SIP_TCP", "SIP_SSL", "ANY", "RADIUS", "RDP", "MYSQL", "MSSQL", "DIAMETER", "SSL_DIAMETER", "DNS_TCP", "ORACLE", "SMPP", "PROXY", "MONGO", "MONGO_TLS", "MQTT", "MQTT_TLS" ]
+    },
+    "sitedomainttl" : {
+      "type" : "integer"
     },
     "sobackupaction" : {
       "type" : "string",
@@ -263,7 +314,7 @@
     },
     "stateupdate" : {
       "type" : "string",
-      "enum" : [ "ENABLED", "DISABLED" ]
+      "enum" : [ "ENABLED", "DISABLED", "UPDATEONBACKENDUPDATE" ]
     },
     "status" : {
       "type" : "integer",
@@ -273,9 +324,16 @@
       "type" : "string",
       "readonly" : true
     },
+    "targettype" : {
+      "type" : "string",
+      "enum" : [ "GSLB" ]
+    },
     "targetvserver" : {
       "type" : "string",
       "readonly" : true
+    },
+    "tcpprobeport" : {
+      "type" : "integer"
     },
     "tcpprofilename" : {
       "type" : "string"
@@ -287,6 +345,12 @@
       "type" : "integer",
       "readonly" : true
     },
+    "timeout" : {
+      "type" : "integer"
+    },
+    "ttl" : {
+      "type" : "integer"
+    },
     "type" : {
       "type" : "string",
       "enum" : [ "CONTENT", "ADDRESS" ],
@@ -296,9 +360,16 @@
       "type" : "string",
       "readonly" : true
     },
+    "v6persistmasklen" : {
+      "type" : "integer"
+    },
     "value" : {
       "type" : "string",
       "enum" : [ "Certkey not bound", "SSL feature disabled" ],
+      "readonly" : true
+    },
+    "version" : {
+      "type" : "integer",
       "readonly" : true
     },
     "vipheader" : {

@@ -2,6 +2,7 @@ package netscaler
 
 import (
 	"testing"
+	"strconv"
 
 	"github.com/dreampuf/go-nitro/config/basic"
 	"github.com/dreampuf/go-nitro/config/lb"
@@ -100,5 +101,16 @@ func TestNitroClient_FindStats(t *testing.T) {
 			// only check one
 			break
 		}
+	}
+}
+
+func TestNitroClient_FindStatsWithArgs(t *testing.T) {
+	beginningStat, err := client.FindStatWithArgs("nsglobalcntr", "", []string{"counters:sys_cur_duration_sincestart"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = strconv.Atoi(beginningStat["sys_cur_duration_sincestart"].(string))
+	if err != nil {
+		t.Fatal(err)
 	}
 }

@@ -18,34 +18,49 @@ package netscaler
 
 import (
 	"crypto/tls"
+	"crypto/x509"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"strconv"
 	"strings"
-	"time"
+	"sync"
+
+	"github.com/hashicorp/go-hclog"
 )
 
 //NitroParams encapsulates options to create a NitroClient
 type NitroParams struct {
-	Url       string
-	Username  string
-	Password  string
-	ProxiedNs string
-	SslVerify bool
-	Timeout   time.Duration
+	Url           string
+	Username      string
+	Password      string
+	ProxiedNs     string
+	SslVerify     bool
+	Timeout       int
+	RootCAPath    string
+	ServerName    string
+	Headers       map[string]string
+	LogLevel      string
+	JSONLogFormat bool
 }
 
 //NitroClient has methods to configure the NetScaler
 //It abstracts the REST operations of the NITRO API
 type NitroClient struct {
-	url       string
-	statsURL  string
-	username  string
-	password  string
-	proxiedNs string
-	client    *http.Client
+	url          string
+	statsURL     string
+	username     string
+	password     string
+	proxiedNs    string
+	client       *http.Client
+	sessionidMux sync.RWMutex
+	sessionid    string
+	timeout      int
+	headers      map[string]string
+	logger       hclog.Logger
 }
 
 //NewNitroClient returns a usable NitroClient. Does not check validity of supplied parameters
@@ -57,6 +72,8 @@ func NewNitroClient(url string, username string, password string) *NitroClient {
 	c.username = username
 	c.password = password
 	c.client = &http.Client{}
+	c.sessionid = ""
+	c.timeout = 0
 	return c
 }
 
@@ -73,15 +90,57 @@ func NewNitroClientFromParams(params NitroParams) (*NitroClient, error) {
 	c.url = strings.Trim(params.Url, " /") + "/nitro/v1/"
 	c.username = params.Username
 	c.password = params.Password
+	c.headers = params.Headers
 	c.proxiedNs = params.ProxiedNs
+	c.sessionid = ""
+	c.timeout = params.Timeout
 	if params.SslVerify {
-		c.client = &http.Client{Timeout: params.Timeout}
+		if len(params.RootCAPath) > 0 {
+			caCert, err := ioutil.ReadFile(params.RootCAPath)
+			if err != nil {
+				return nil, fmt.Errorf("Unable to read certificate file: %v", err)
+			}
+			caCertPool := x509.NewCertPool()
+			if ok := caCertPool.AppendCertsFromPEM(caCert); !ok {
+				return nil, fmt.Errorf("Could not Append CA certificate.")
+			}
+			tr := &http.Transport{
+				TLSClientConfig: &tls.Config{
+					RootCAs:    caCertPool,
+					ServerName: params.ServerName,
+				},
+			}
+			c.client = &http.Client{Transport: tr}
+		} else {
+			c.client = &http.Client{}
+		}
 	} else {
 		tr := &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		}
 		c.client = &http.Client{Transport: tr, Timeout: params.Timeout}
 	}
+	level := hclog.LevelFromString(params.LogLevel)
+	if level == hclog.NoLevel {
+		level = hclog.Off
+	}
+	logLevel, ok := os.LookupEnv("NS_LOG")
+	if ok {
+		lvl := hclog.LevelFromString(logLevel)
+		if lvl != hclog.NoLevel {
+			level = lvl
+		} else {
+			log.Printf("go-nitro: NS_LOG not set to a valid log level (%s), defaulting to %d", logLevel, level)
+		}
+	}
+	//c.logger = hclog.Default()
+	c.logger = hclog.New(&hclog.LoggerOptions{
+		Name:            "go-nitro",
+		Level:           level,
+		Color:           hclog.AutoColor,
+		JSONFormat:      params.JSONLogFormat,
+		IncludeLocation: true,
+	})
 	return c, nil
 }
 
@@ -93,7 +152,7 @@ func NewNitroClientFromEnv() (*NitroClient, error) {
 	username := os.Getenv("NS_LOGIN")
 	password := os.Getenv("NS_PASSWORD")
 	if url == "" || username == "" || password == "" {
-		return nil, fmt.Errorf("Could not completely determine login parameters from env: NS_URL, NS_LOGIN, NS_PASSWORD")
+		return nil, fmt.Errorf("could not completely determine login parameters from env: NS_URL, NS_LOGIN, NS_PASSWORD")
 	}
 	proxiedNs := os.Getenv("_MPS_API_PROXY_MANAGED_INSTANCE_IP")
 	sslverifyStr := os.Getenv("NS_SSLVERIFY")
@@ -102,16 +161,26 @@ func NewNitroClientFromEnv() (*NitroClient, error) {
 		var err error
 		sslVerify, err = strconv.ParseBool(sslverifyStr)
 		if err != nil {
-			return nil, fmt.Errorf("Could not parse env variable NS_SSLVERIFY: valid values are true and false")
+			return nil, fmt.Errorf("could not parse env variable NS_SSLVERIFY: valid values are true and false")
+		}
+	}
+	timeoutStr := os.Getenv("NS_TIMEOUT")
+	timeout := 0
+	if timeoutStr != "" {
+		var err error
+		timeout, err = strconv.Atoi(timeoutStr)
+		if err != nil {
+			return nil, fmt.Errorf("could not parse env variable NS_TIMEOUT: integer value is expected")
 		}
 	}
 	nitroParams := NitroParams{
-		Url:       url,
-		Username:  username,
-		Password:  password,
-		ProxiedNs: proxiedNs,
-		SslVerify: sslVerify,
-		Timeout:   60 * time.Second,
+		Url:           url,
+		Username:      username,
+		Password:      password,
+		ProxiedNs:     proxiedNs,
+		SslVerify:     sslVerify,
+		Timeout:       timeout,
+		JSONLogFormat: false,
 	}
 	return NewNitroClientFromParams(nitroParams)
 }

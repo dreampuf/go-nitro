@@ -3,8 +3,18 @@
   "properties" : {
     "builtin" : {
       "type" : "object",
-      "enum" : [ "MODIFIABLE", "DELETABLE", "IMMUTABLE" ],
+      "enum" : [ "MODIFIABLE", "DELETABLE", "IMMUTABLE", "PARTITION_ALL" ],
       "readonly" : true
+    },
+    "cacertgrpname" : {
+      "type" : "string"
+    },
+    "certfingerprintdigest" : {
+      "type" : "string",
+      "enum" : [ "SHA1", "SHA224", "SHA256", "SHA384", "SHA512" ]
+    },
+    "certfingerprintheader" : {
+      "type" : "string"
     },
     "certhashheader" : {
       "type" : "string"
@@ -42,6 +52,10 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "clientcertfingerprint" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
     "clientcerthash" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
@@ -66,9 +80,21 @@
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
+    "clientcertverification" : {
+      "type" : "string",
+      "enum" : [ "Mandatory", "Optional" ]
+    },
     "description" : {
       "type" : "string",
       "readonly" : true
+    },
+    "feature" : {
+      "type" : "string",
+      "enum" : [ "WL", "WebLogging", "SP", "SurgeProtection", "LB", "LoadBalancing", "CS", "ContentSwitching", "CR", "CacheRedirection", "SC", "SureConnect", "CMP", "CMPcntl", "CompressionControl", "PQ", "PriorityQueuing", "HDOSP", "HttpDoSProtection", "SSLVPN", "AAA", "GSLB", "GlobalServerLoadBalancing", "SSL", "SSLOffload", "SSLOffloading", "CF", "ContentFiltering", "IC", "IntegratedCaching", "OSPF", "OSPFRouting", "RIP", "RIPRouting", "BGP", "BGPRouting", "REWRITE", "IPv6PT", "IPv6protocoltranslation", "AppFw", "ApplicationFirewall", "RESPONDER", "HTMLInjection", "push", "NSPush", "NetScalerPush", "AppFlow", "CloudBridge", "ISIS", "ISISRouting", "CH", "CallHome", "AppQoE", "ContentAccelerator", "SYSTEM", "RISE", "FEO", "LSN", "LargeScaleNAT", "RDPProxy", "Rep", "Reputation", "URLFiltering", "VideoOptimization", "ForwardProxy", "SSLInterception", "AdaptiveTCP", "CQA", "CI", "ContentInspection", "Bot", "APIGateway" ],
+      "readonly" : true
+    },
+    "forward" : {
+      "type" : "string"
     },
     "hits" : {
       "type" : "integer",
@@ -90,6 +116,9 @@
       "enum" : [ "ENABLED", "DISABLED" ]
     },
     "sessionidheader" : {
+      "type" : "string"
+    },
+    "ssllogprofile" : {
       "type" : "string"
     },
     "undefhits" : {

@@ -1,10 +1,31 @@
 {
   "type" : "object",
   "properties" : {
+    "contenttypeautodeploygraceperiod" : {
+      "type" : "integer"
+    },
+    "contenttypeminthreshold" : {
+      "type" : "integer"
+    },
+    "contenttypepercentthreshold" : {
+      "type" : "integer"
+    },
+    "cookieconsistencyautodeploygraceperiod" : {
+      "type" : "integer"
+    },
     "cookieconsistencyminthreshold" : {
       "type" : "integer"
     },
     "cookieconsistencypercentthreshold" : {
+      "type" : "integer"
+    },
+    "creditcardnumberminthreshold" : {
+      "type" : "integer"
+    },
+    "creditcardnumberpercentthreshold" : {
+      "type" : "integer"
+    },
+    "crosssitescriptingautodeploygraceperiod" : {
       "type" : "integer"
     },
     "crosssitescriptingminthreshold" : {
@@ -13,16 +34,25 @@
     "crosssitescriptingpercentthreshold" : {
       "type" : "integer"
     },
+    "csrftagautodeploygraceperiod" : {
+      "type" : "integer"
+    },
     "csrftagminthreshold" : {
       "type" : "integer"
     },
     "csrftagpercentthreshold" : {
       "type" : "integer"
     },
+    "fieldconsistencyautodeploygraceperiod" : {
+      "type" : "integer"
+    },
     "fieldconsistencyminthreshold" : {
       "type" : "integer"
     },
     "fieldconsistencypercentthreshold" : {
+      "type" : "integer"
+    },
+    "fieldformatautodeploygraceperiod" : {
       "type" : "integer"
     },
     "fieldformatminthreshold" : {
@@ -34,10 +64,16 @@
     "profilename" : {
       "type" : "string"
     },
+    "sqlinjectionautodeploygraceperiod" : {
+      "type" : "integer"
+    },
     "sqlinjectionminthreshold" : {
       "type" : "integer"
     },
     "sqlinjectionpercentthreshold" : {
+      "type" : "integer"
+    },
+    "starturlautodeploygraceperiod" : {
       "type" : "integer"
     },
     "starturlminthreshold" : {

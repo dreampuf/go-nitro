@@ -1,6 +1,10 @@
 {
   "type" : "object",
   "properties" : {
+    "connfailover" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
     "flags" : {
       "type" : "integer",
       "readonly" : true
@@ -33,6 +37,10 @@
       "type" : "integer"
     },
     "tftp" : {
+      "type" : "string",
+      "enum" : [ "ENABLED", "DISABLED" ]
+    },
+    "useproxyport" : {
       "type" : "string",
       "enum" : [ "ENABLED", "DISABLED" ]
     },
