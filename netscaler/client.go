@@ -28,6 +28,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/hashicorp/go-hclog"
 )
@@ -118,7 +119,10 @@ func NewNitroClientFromParams(params NitroParams) (*NitroClient, error) {
 		tr := &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		}
-		c.client = &http.Client{Transport: tr, Timeout: params.Timeout}
+		c.client = &http.Client{Transport: tr}
+	}
+	if c.timeout != 0 {
+		c.client.Timeout = time.Second * time.Duration(c.timeout)
 	}
 	level := hclog.LevelFromString(params.LogLevel)
 	if level == hclog.NoLevel {

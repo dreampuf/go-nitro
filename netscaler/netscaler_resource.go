@@ -22,7 +22,9 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/hashicorp/go-hclog"
@@ -398,19 +400,6 @@ func (c *NitroClient) listResourceWithArgsMap(resourceType string, resourceName 
 		i++
 	}
 	return c.listResourceWithArgs(resourceType, resourceName, args)
-
-}
-
-func (c *NitroClient) listStat(resourceType, resourceName string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: listing resource of type ", resourceType, ", name: ", resourceName)
-	url := c.url + "stat/" + resourceType
-
-	if resourceName != "" {
-		url = c.url + fmt.Sprintf("stat/%s/%s", resourceType, resourceName)
-	}
-	log.Println("[TRACE] go-nitro: url is ", url)
-
-	return c.doHTTPRequest("GET", url, bytes.NewBuffer([]byte{}), readResponseHandler)
 
 }
 

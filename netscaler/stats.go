@@ -1,8 +1,8 @@
 package netscaler
 
 import (
-	"fmt"
 	"encoding/json"
+	"fmt"
 )
 
 //FindStats returns the statistics of the supplied resource type if it exists. Use when the resource to be returned is an array
@@ -10,16 +10,16 @@ func (c *NitroClient) FindAllStats(resourceType string) ([]map[string]interface{
 	var data map[string]interface{}
 	result, err := c.listStat(resourceType, "")
 	if err != nil {
-		log.Printf("[WARN] go-nitro: FindStats: No %s found", resourceType)
+		c.logger.Warn("FindStats: No %s found", resourceType)
 		return nil, fmt.Errorf("[INFO] go-nitro: FindStats: No type %s found", resourceType)
 	}
 	if err = json.Unmarshal(result, &data); err != nil {
-		log.Printf("[ERROR] go-nitro: FindStats: Failed to unmarshal Netscaler Response!")
+		c.logger.Error("FindStats: Failed to unmarshal Netscaler Response!")
 		return nil, fmt.Errorf("[ERROR] go-nitro: FindStats: Failed to unmarshal Netscaler Response: type %s", resourceType)
 	}
 	rsrcs, ok := data[resourceType]
 	if !ok || rsrcs == nil {
-		log.Printf("[WARN] go-nitro: FindStats No %s type found", resourceType)
+		c.logger.Warn("FindStats No %s type found", resourceType)
 		return nil, fmt.Errorf("[INFO] go-nitro: FindStats: No type of %s found", resourceType)
 	}
 	resources := data[resourceType].([]interface{})
@@ -35,16 +35,16 @@ func (c *NitroClient) FindStat(resourceType string, resourceName string) (map[st
 	var data map[string]interface{}
 	result, err := c.listStat(resourceType, resourceName)
 	if err != nil {
-		log.Printf("[WARN] go-nitro: FindStat: No %s %s found", resourceType, resourceName)
+		c.logger.Warn("FindStat: No %s %s found", resourceType, resourceName)
 		return nil, fmt.Errorf("[INFO] go-nitro: FindStat: No resource %s of type %s found", resourceName, resourceType)
 	}
 	if err = json.Unmarshal(result, &data); err != nil {
-		log.Printf("[ERROR] go-nitro: FindStat: Failed to unmarshal Netscaler Response!")
+		c.logger.Error("FindStat: Failed to unmarshal Netscaler Response!")
 		return nil, fmt.Errorf("[ERROR] go-nitro: FindStat: Failed to unmarshal Netscaler Response:resource %s of type %s", resourceName, resourceType)
 	}
 	rsrc, ok := data[resourceType]
 	if !ok || rsrc == nil {
-		log.Printf("[WARN] go-nitro: FindStat No %s type with name %s found", resourceType, resourceName)
+		c.logger.Warn("FindStat No %s type with name %s found", resourceType, resourceName)
 		return nil, fmt.Errorf("[INFO] go-nitro: FindStat: No resource %s of type %s found", resourceName, resourceType)
 	}
 	resource := data[resourceType].([]interface{})[0] //only one resource obviously
@@ -57,16 +57,16 @@ func (c *NitroClient) FindStatWithArgs(resourceType string, resourceName string,
 	var data map[string]interface{}
 	result, err := c.listStatWithArgs(resourceType, resourceName, args)
 	if err != nil {
-		log.Printf("[WARN] go-nitro: FindStatWithArgs: No %s %s found", resourceType, resourceName)
+		c.logger.Warn("FindStatWithArgs: No %s %s found", resourceType, resourceName)
 		return nil, fmt.Errorf("[INFO] go-nitro: FindStatWithArgs: No resource %s of type %s found", resourceName, resourceType)
 	}
 	if err = json.Unmarshal(result, &data); err != nil {
-		log.Printf("[ERROR] go-nitro: FindStatWithArgs: Failed to unmarshal Netscaler Response!")
+		c.logger.Error("FindStatWithArgs: Failed to unmarshal Netscaler Response!")
 		return nil, fmt.Errorf("[ERROR] go-nitro: FindStatWithArgs: Failed to unmarshal Netscaler Response:resource %s of type %s", resourceName, resourceType)
 	}
 	rsrc, ok := data[resourceType]
 	if !ok || rsrc == nil {
-		log.Printf("[WARN] go-nitro: FindStatWithArgs No %s type with name %s found", resourceType, resourceName)
+		c.logger.Warn("FindStatWithArgs No %s type with name %s found", resourceType, resourceName)
 		return nil, fmt.Errorf("[INFO] go-nitro: FindStatWithArgs: No resource %s of type %s found", resourceName, resourceType)
 	}
 	switch result := data[resourceType].(type) {
@@ -75,7 +75,7 @@ func (c *NitroClient) FindStatWithArgs(resourceType string, resourceName string,
 	case []interface{}:
 		return result[0].(map[string]interface{}), nil
 	default:
-		log.Printf("[WARN] go-nitro: FindStatWithArgs Unable to determine type of response")
+		c.logger.Warn("FindStatWithArgs Unable to determine type of response")
 		return nil, fmt.Errorf("[INFO] go-nitro: FindStatWithArgs: Unable to determine type of response")
 	}
 }
