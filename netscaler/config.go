@@ -20,7 +20,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"sort"
 	"strings"
 
@@ -797,7 +796,7 @@ func (c *NitroClient) ListEnabledFeatures() ([]string, error) {
 	result = strings.TrimPrefix(result, "[")
 	result = strings.TrimSuffix(result, "]")
 	flist := strings.Split(result, " ")
-	log.Println("result: ", result, "flist: ", flist)
+	c.logger.Debug("result: %v flist: %v", result, flist)
 	return flist, nil
 }
 
@@ -856,7 +855,7 @@ func (c *NitroClient) ListEnabledModes() ([]string, error) {
 	result = strings.TrimPrefix(result, "[")
 	result = strings.TrimSuffix(result, "]")
 	mlist := strings.Split(result, " ")
-	log.Println("result: ", result, "mlist: ", mlist)
+	c.logger.Debug("result: %v mlist: %v", result, mlist)
 	return mlist, nil
 }
 

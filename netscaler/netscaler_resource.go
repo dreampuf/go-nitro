@@ -22,7 +22,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -320,7 +319,7 @@ func (c *NitroClient) unbindResource(resourceType string, resourceName string, b
 }
 
 func (c *NitroClient) listBoundResources(resourceName string, resourceType string, boundResourceType string, boundResourceFilterName string, boundResourceFilterValue string) ([]byte, error) {
-	log.Println("[DEBUG] go-nitro: listing bound resources of type ", resourceType, ": ", resourceName)
+	c.logger.Trace("listing bound resources of type ", resourceType, ": ", resourceName)
 	var requestUrl, filter string
 	resourceCondition := "/" + resourceName
 	if resourceName == "" {
