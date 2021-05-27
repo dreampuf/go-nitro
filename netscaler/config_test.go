@@ -18,6 +18,7 @@ package netscaler
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"math/rand"
 	"testing"
 	"time"
@@ -869,7 +870,8 @@ func TestConstructQueryString(t *testing.T) {
 			}
 		}
 	}
-	var argsMap, attrsMap, filterMap map[string]string
+	var argsMap, filterMap map[string]string
+	var attrsAry []string
 	var findParams FindParams
 
 	argsMap = make(map[string]string)
@@ -886,16 +888,15 @@ func TestConstructQueryString(t *testing.T) {
 	}
 	t.Run("CASE=2", generateTestCase(findParams, "?args=bye:hello,hello:bye"))
 
-	attrsMap = make(map[string]string)
-	attrsMap["bye"] = "hello"
+	attrsAry = []string{"hello"}
 	findParams = FindParams{
-		AttrsMap: attrsMap,
+		AttrsAry: attrsAry,
 	}
-	t.Run("CASE=3", generateTestCase(findParams, "?attrs=bye:hello"))
+	t.Run("CASE=3", generateTestCase(findParams, "?attrs=hello"))
 
-	attrsMap["hello"] = "bye"
+	attrsAry = append(attrsAry, "bye")
 
-	t.Run("CASE=4", generateTestCase(findParams, "?attrs=bye:hello,hello:bye"))
+	t.Run("CASE=4", generateTestCase(findParams, "?attrs=bye,hello"))
 
 	filterMap = make(map[string]string)
 	filterMap["bye"] = "hello"
@@ -909,26 +910,26 @@ func TestConstructQueryString(t *testing.T) {
 	t.Run("CASE=6", generateTestCase(findParams, "?filter=bye:hello,hello:bye"))
 
 	filterMap = make(map[string]string)
-	attrsMap = make(map[string]string)
+	attrsAry = []string{}
 	argsMap = make(map[string]string)
 
 	filterMap["bye"] = "hello"
-	attrsMap["bye"] = "hello"
+	attrsAry = append(attrsAry, "hello")
 	argsMap["bye"] = "hello"
 
 	findParams = FindParams{
 		FilterMap: filterMap,
 		ArgsMap:   argsMap,
-		AttrsMap:  attrsMap,
+		AttrsAry:  attrsAry,
 	}
 
-	t.Run("CASE=7", generateTestCase(findParams, "?args=bye:hello&filter=bye:hello&attrs=bye:hello"))
+	t.Run("CASE=7", generateTestCase(findParams, "?args=bye:hello&filter=bye:hello&attrs=hello"))
 
 	filterMap["hello"] = "bye"
-	attrsMap["hello"] = "bye"
+	attrsAry = append(attrsAry, "bye")
 	argsMap["hello"] = "bye"
 
-	expected := "?args=bye:hello,hello:bye&filter=bye:hello,hello:bye&attrs=bye:hello,hello:bye"
+	expected := "?args=bye:hello,hello:bye&filter=bye:hello,hello:bye&attrs=bye,hello"
 	t.Run("CASE=8", generateTestCase(findParams, expected))
 }
 

@@ -38,7 +38,7 @@ func JSONMarshal(t interface{}) ([]byte, error) {
 type FindParams struct {
 	ArgsMap                  map[string]string
 	FilterMap                map[string]string
-	AttrsMap                 map[string]string
+	AttrsAry                 []string
 	ResourceType             string
 	ResourceName             string
 	ResourceMissingErrorCode int
@@ -78,7 +78,7 @@ func constructQueryString(findParams *FindParams) string {
 	var queryBuilder strings.Builder
 	concatQueryString(&queryBuilder, constructQueryMapString("args=", findParams.ArgsMap))
 	concatQueryString(&queryBuilder, constructQueryMapString("filter=", findParams.FilterMap))
-	concatQueryString(&queryBuilder, constructQueryMapString("attrs=", findParams.AttrsMap))
+	concatQueryString(&queryBuilder, constructQueryAryString("attrs=", findParams.AttrsAry))
 
 	return queryBuilder.String()
 }
@@ -109,6 +109,14 @@ func constructQueryMapString(prefix string, queryMap map[string]string) string {
 		}
 	}
 
+	return queryBuilder.String()
+}
+
+func constructQueryAryString(prefix string, queryAry []string) string {
+	var queryBuilder strings.Builder
+	queryBuilder.WriteString(prefix)
+	sort.Strings(queryAry)
+	queryBuilder.WriteString(strings.Join(queryAry, ","))
 	return queryBuilder.String()
 }
 
