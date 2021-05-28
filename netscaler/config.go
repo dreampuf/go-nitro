@@ -113,6 +113,9 @@ func constructQueryMapString(prefix string, queryMap map[string]string) string {
 }
 
 func constructQueryAryString(prefix string, queryAry []string) string {
+	if len(queryAry) == 0 {
+		return ""
+	}
 	var queryBuilder strings.Builder
 	queryBuilder.WriteString(prefix)
 	sort.Strings(queryAry)
