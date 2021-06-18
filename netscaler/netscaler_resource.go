@@ -203,7 +203,7 @@ func (c *NitroClient) doHTTPRequest(method string, urlstr string, bytes *bytes.B
 func (c *NitroClient) createResource(resourceType string, resourceJSON []byte) ([]byte, error) {
 	c.logger.Trace("Creating ", "resourceType", resourceType)
 
-	url := c.url + "config/" + resourceType
+	url := c.url + resourceType
 
 	if !strings.HasSuffix(resourceType, "_binding") && !contains(idempotentInvalidResources, resourceType) {
 		url = url + "?idempotent=yes"
@@ -226,6 +226,7 @@ func (c *NitroClient) applyResource(resourceType string, resourceJSON []byte) ([
 
 func (c *NitroClient) actOnResource(resourceType string, resourceJSON []byte, action string) ([]byte, error) {
 	c.logger.Trace("acting on resource", "resourceType", resourceType)
+
 	var url string
 	if action == "" {
 		url = c.url + fmt.Sprintf("%s", resourceType)
@@ -272,9 +273,9 @@ func (c *NitroClient) deleteResource(resourceType string, resourceName string) (
 	c.logger.Trace("Deleting resource", "resourceType", resourceType)
 	var url string
 	if resourceName != "" {
-		url = c.url + fmt.Sprintf("config/%s/%s", resourceType, resourceName)
+		url = c.url + fmt.Sprintf("%s/%s", resourceType, resourceName)
 	} else {
-		url = c.url + fmt.Sprintf("config/%s", resourceType)
+		url = c.url + fmt.Sprintf("%s", resourceType)
 	}
 	c.logger.Trace("deleteResource", "url", url)
 
@@ -286,9 +287,9 @@ func (c *NitroClient) deleteResourceWithArgs(resourceType string, resourceName s
 	c.logger.Trace("Deleting resource with args", "resourceType", resourceType, "args ", args)
 	var url string
 	if resourceName != "" {
-		url = c.url + fmt.Sprintf("config/%s/%s?args=", resourceType, resourceName)
+		url = c.url + fmt.Sprintf("%s/%s?args=", resourceType, resourceName)
 	} else {
-		url = c.url + fmt.Sprintf("config/%s?args=", resourceType)
+		url = c.url + fmt.Sprintf("%s?args=", resourceType)
 	}
 	url = url + strings.Join(args, ",")
 	c.logger.Trace("deleteResourceWithArgs ", "url", url)
@@ -312,30 +313,32 @@ func (c *NitroClient) unbindResource(resourceType string, resourceName string, b
 	c.logger.Trace("Unbinding resource", "resourceType", resourceType, "resourceName", resourceName)
 	bindingName := resourceType + "_" + boundResourceType + "_binding"
 
-	url := c.url + "config/" + bindingName + "/" + resourceName + "?args=" + bindingFilterName + ":" + boundResource
+	url := c.url + bindingName + "/" + resourceName + "?args=" + bindingFilterName + ":" + boundResource
 
 	return c.doHTTPRequest("DELETE", url, bytes.NewBuffer([]byte{}), deleteResponseHandler)
 
 }
 
 func (c *NitroClient) listBoundResources(resourceName string, resourceType string, boundResourceType string, boundResourceFilterName string, boundResourceFilterValue string) ([]byte, error) {
-	c.logger.Trace("listing bound resources of type ", resourceType, ": ", resourceName)
-	var requestUrl, filter string
+	c.logger.Trace("listing bound resources of type ", "resourceType", resourceType, "resourceName", resourceName)
+	var url, filter string
 	resourceCondition := "/" + resourceName
 	if resourceName == "" {
 		resourceCondition = ""
-		filter = "bulkbindings=yes"
+		filter = "?bulkbindings=yes"
 	}
 	if boundResourceFilterName != "" {
 		if filter != "" {
 			filter += "&"
+		} else {
+			filter = "?"
 		}
 		filter = filter + fmt.Sprintf("filter=%s:%s", boundResourceFilterName, boundResourceFilterValue)
 	}
 
-	requestUrl = c.url + fmt.Sprintf("config/%s_%s_binding%s?%s", resourceType, boundResourceType, resourceCondition, filter)
+	url = c.url + fmt.Sprintf("%s_%s_binding%s%s", resourceType, boundResourceType, resourceCondition, filter)
 
-	return c.doHTTPRequest("GET", requestUrl, bytes.NewBuffer([]byte{}), readResponseHandler)
+	return c.doHTTPRequest("GET", url, bytes.NewBuffer([]byte{}), readResponseHandler)
 }
 
 func (c *NitroClient) listFilteredResource(resourceType string, filter map[string]string) ([]byte, error) {
@@ -348,7 +351,7 @@ func (c *NitroClient) listFilteredResource(resourceType string, filter map[strin
 
 	filter_string := strings.Join(filter_strings, ",")
 
-	url := c.url + fmt.Sprintf("config/%s?filter=%s", resourceType, filter_string)
+	url := c.url + fmt.Sprintf("%s?filter=%s", resourceType, filter_string)
 
 	return c.doHTTPRequest("GET", url, bytes.NewBuffer([]byte{}), readResponseHandler)
 
@@ -359,7 +362,7 @@ func (c *NitroClient) listResource(resourceType string, resourceName string) ([]
 	url := c.url + resourceType
 
 	if resourceName != "" {
-		url = c.url + fmt.Sprintf("config/%s/%s", resourceType, resourceName)
+		url = c.url + fmt.Sprintf("%s/%s", resourceType, resourceName)
 	}
 	c.logger.Trace("listResource", "url", url)
 
@@ -372,9 +375,9 @@ func (c *NitroClient) listResourceWithArgs(resourceType string, resourceName str
 	var url string
 
 	if resourceName != "" {
-		url = c.url + fmt.Sprintf("config/%s/%s", resourceType, resourceName)
+		url = c.url + fmt.Sprintf("%s/%s", resourceType, resourceName)
 	} else {
-		url = c.url + fmt.Sprintf("config/%s", resourceType)
+		url = c.url + fmt.Sprintf("%s", resourceType)
 	}
 	strArgs := strings.Join(args, ",")
 	url2 := url + "?args=" + strArgs
