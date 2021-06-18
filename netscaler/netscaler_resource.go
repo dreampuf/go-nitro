@@ -325,16 +325,18 @@ func (c *NitroClient) listBoundResources(resourceName string, resourceType strin
 	resourceCondition := "/" + resourceName
 	if resourceName == "" {
 		resourceCondition = ""
-		filter = "bulkbindings=yes"
+		filter = "?bulkbindings=yes"
 	}
 	if boundResourceFilterName != "" {
 		if filter != "" {
 			filter += "&"
+		} else {
+			filter = "?"
 		}
 		filter = filter + fmt.Sprintf("filter=%s:%s", boundResourceFilterName, boundResourceFilterValue)
 	}
 
-	url = c.url + fmt.Sprintf("%s_%s_binding%s?%s", resourceType, boundResourceType, resourceCondition, filter)
+	url = c.url + fmt.Sprintf("%s_%s_binding%s%s", resourceType, boundResourceType, resourceCondition, filter)
 
 	return c.doHTTPRequest("GET", url, bytes.NewBuffer([]byte{}), readResponseHandler)
 }
